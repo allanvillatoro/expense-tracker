@@ -5,11 +5,11 @@ export type CategoryDocument = Category & Document;
 
 @Schema()
 export class Category {
-  @Prop()
+  @Prop({ required: true })
   name: string;
-  @Prop()
+  @Prop({ required: true })
   budget: number;
-  @Prop()
+  @Prop({ required: true })
   alarmThreshold: number;
 }
 

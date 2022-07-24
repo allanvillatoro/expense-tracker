@@ -5,13 +5,13 @@ export type ExpenseDocument = Expense & Document;
 
 @Schema()
 export class Expense {
-  @Prop()
+  @Prop({ required: true })
   description: string;
-  @Prop()
+  @Prop({ required: true })
   categoryName: string;
-  @Prop()
+  @Prop({ required: true })
   amount: number;
-  @Prop()
+  @Prop({ required: true })
   date: Date;
 }
 

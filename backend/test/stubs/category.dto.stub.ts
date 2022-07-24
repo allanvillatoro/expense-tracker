@@ -2,7 +2,7 @@ import { CategoryDTO } from "src/categories/dto/category.dto";
 
 export const CategoryDTOStub = (): CategoryDTO => {
     return {
-        name: 'Alimentos',
+        name: 'drinks',
         budget: 400,
         alarmThreshold: 80
     };
