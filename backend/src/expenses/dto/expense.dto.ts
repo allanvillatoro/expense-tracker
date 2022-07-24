@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { IsDate, IsInt, IsPositive, IsString, MaxDate, MinLength } from 'class-validator';
 
 export class ExpenseDTO {
@@ -11,8 +12,8 @@ export class ExpenseDTO {
   @IsPositive()
   readonly amount: number;
   @IsDate()
+  @Transform( ({ value }) => new Date(value))
   //I will try this later for dates < now
-  //@Transform( ({ value }) => new Date(value))
-  //@MinDate(new Date())
+  //@MaxDate(new Date())
   readonly date: Date;
 }
