@@ -2,11 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CategoriesController } from './categories.controller';
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { connect, Connection, Model } from 'mongoose';
-import { Category, CategorySchema } from 'src/schemas/category.schema';
+import { Category, CategorySchema } from '../schemas/category.schema';
 import { CategoriesService } from './categories.service';
 import { getConnectionToken, getModelToken } from '@nestjs/mongoose';
-import { CategoryDTOStub } from 'test/stubs/category.dto.stub';
-import { CategoryAlreadyExists } from 'src/exceptions/category-already-exists.exception';
+import { CategoryDTOStub } from '../../test/stubs/category.dto.stub';
+import { CategoryAlreadyExists } from '../exceptions/category-already-exists.exception';
 
 describe('CategoriesController', () => {
   let categoriesController: CategoriesController;

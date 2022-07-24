@@ -10,12 +10,12 @@ import { ExpenseSchema } from './schemas/expense.schema';
 import { CategorySchema } from './schemas/category.schema';
 
 //temporary
-const connection = `mongodb+srv://allanvillatoro:Vanguardia2022@expense-tracker-db.5q8qdxt.mongodb.net/?retryWrites=true&w=majority`;
+const connection = `mongodb+srv://allanvillatoro:Vanguardia2022@expense-tracker-db.5q8qdxt.mongodb.net/expensetracker?retryWrites=true&w=majority`;
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: 'expensehistory', schema: ExpenseSchema },
+      { name: 'expenses', schema: ExpenseSchema },
       { name: 'expensecategories', schema: CategorySchema }
     ]),
     MongooseModule.forRoot(connection)

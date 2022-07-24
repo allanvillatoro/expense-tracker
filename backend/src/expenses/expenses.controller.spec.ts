@@ -2,10 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ExpensesController } from './expenses.controller';
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { connect, Connection, Model } from 'mongoose';
-import { Expense, ExpenseSchema } from 'src/schemas/expense.schema';
+import { Expense, ExpenseSchema } from '../schemas/expense.schema';
 import { ExpensesService } from './expenses.service';
 import { getConnectionToken, getModelToken } from '@nestjs/mongoose';
-import { ExpenseDTOStub } from 'test/stubs/expense.dto.stub';
+import { ExpenseDTOStub } from '../../test/stubs/expense.dto.stub';
 
 describe('ExpensesController', () => {
   let expensesController: ExpensesController;
@@ -23,7 +23,7 @@ describe('ExpensesController', () => {
       providers: [
         ExpensesService,
         { provide: getConnectionToken("DatabaseConnection"), useValue: mongoConnection },
-        { provide: getModelToken('expensehistory'), useValue: expenseModel },
+        { provide: getModelToken('expenses'), useValue: expenseModel },
       ],
     }).compile();
     expensesController = app.get<ExpensesController>(ExpensesController);
