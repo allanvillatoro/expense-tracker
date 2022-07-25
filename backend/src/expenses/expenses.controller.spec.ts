@@ -6,24 +6,32 @@ import { Expense, ExpenseSchema } from '../schemas/expense.schema';
 import { ExpensesService } from './expenses.service';
 import { getConnectionToken, getModelToken } from '@nestjs/mongoose';
 import { ExpenseDTOStub } from '../../test/stubs/expense.dto.stub';
+import { CategoryDoesntExist } from '../exceptions/category-doesnt-exist.exception';
+import { Category, CategorySchema } from '../schemas/category.schema';
+import { CategoryDTOStub } from '../../test/stubs/category.dto.stub';
 
 describe('ExpensesController', () => {
   let expensesController: ExpensesController;
   let mongod: MongoMemoryServer;
   let mongoConnection: Connection;
   let expenseModel: Model<Expense>;
+  let categoryModel: Model<Category>;
 
   beforeAll(async()=>{
     mongod = await MongoMemoryServer.create();
     const uri = mongod.getUri();
     mongoConnection = (await connect(uri)).connection;
-    expenseModel = mongoConnection.model('expensehistory', ExpenseSchema);
+
+    expenseModel = mongoConnection.model('expenses', ExpenseSchema);
+    categoryModel = mongoConnection.model('expensecategories', CategorySchema);
+
     const app: TestingModule = await Test.createTestingModule({
       controllers: [ExpensesController],
       providers: [
         ExpensesService,
         { provide: getConnectionToken("DatabaseConnection"), useValue: mongoConnection },
         { provide: getModelToken('expenses'), useValue: expenseModel },
+        { provide: getModelToken('expensecategories'), useValue: categoryModel },
       ],
     }).compile();
     expensesController = app.get<ExpensesController>(ExpensesController);
@@ -63,8 +71,17 @@ describe('ExpensesController', () => {
 
   describe ("postExpense",()=>{
     it("should return the saved expense", async () => {
+      //Add: create the related category on the db
+      await (new categoryModel(CategoryDTOStub()).save());
       const createdExpense = await expensesController.postExpense(ExpenseDTOStub());
       expect(createdExpense.description).toBe(ExpenseDTOStub().description);
+    });
+
+    it("should return CategoryDoesntExist (Bad Request - 400) exception", async () => {
+      await (new expenseModel(ExpenseDTOStub()).save());
+      await expect(expensesController.postExpense(ExpenseDTOStub()))
+        .rejects
+        .toThrow(CategoryDoesntExist);
     });
   })
 });

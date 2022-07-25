@@ -14,7 +14,7 @@ export class CategoriesService {
 
   async postCategory(category: CategoryDTO) {
     const existingCategory = await this.categoryModel
-      .findOne({ name: category.name })
+      .findOne({ name: {$regex: category.name, $options: "i"} })
       .exec();
     if (existingCategory) throw new CategoryAlreadyExists();
     const createdCategory = await new this.categoryModel(category).save();
