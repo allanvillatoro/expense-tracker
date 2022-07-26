@@ -19,6 +19,6 @@ export class ExpensesController {
 
     @Get(':userId')
     getExpensesByUser(@Param() {userId}: ParamsWithUserId) {
-      return this.expensesService.getExpenses(userId);
+      return this.expensesService.getExpensesByUser(userId);
     }
 }

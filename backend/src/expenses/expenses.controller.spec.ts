@@ -96,12 +96,13 @@ describe('ExpensesController', () => {
 
   describe('postExpense', () => {
     it('should return the saved expense', async () => {
-
       const newUser = new userModel(UserDTOStub());
       await newUser.save();
       const newExpense = { ...ExpenseDTOStub(), userId: newUser._id.toString() };
 
-      await new categoryModel(CategoryDTOStub()).save();
+      const newCategory = { ...CategoryDTOStub(), userId: newUser._id.toString() };
+      await new categoryModel(newCategory).save();
+
       const createdExpense = await expensesController.postExpense(newExpense);
       expect(createdExpense.description).toBe(ExpenseDTOStub().description);
     });

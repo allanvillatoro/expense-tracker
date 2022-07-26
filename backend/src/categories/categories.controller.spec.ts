@@ -59,7 +59,7 @@ describe('CategoriesController', () => {
       const newCategory = { ...CategoryDTOStub(), userId: newUser._id.toString() };
       await (new categoryModel(newCategory).save());
 
-      const categories = await categoriesController.getCategoriesByUser(newUser._id.toString());
+      const categories = await categoriesController.getCategoriesByUser({userId: newUser._id.toString()});
       expect(categories.length === 1 && Array.isArray(categories)).toBeTruthy();
     });
     it("should return the saved category", async () => {
@@ -69,12 +69,12 @@ describe('CategoriesController', () => {
       const newCategory = { ...CategoryDTOStub(), userId: newUser._id.toString() };
       await (new categoryModel(newCategory).save());
 
-      const categories = await categoriesController.getCategoriesByUser(newUser._id.toString());
+      const categories = await categoriesController.getCategoriesByUser({userId: newUser._id.toString()});
       const category = categories[0];
       expect(category.name).toBe(CategoryDTOStub().name);
     });
     it("should return an empty array", async () => {
-      const categories = await categoriesController.getCategoriesByUser('62df501ee11250bb65262493');
+      const categories = await categoriesController.getCategoriesByUser({userId: '62df501ee11250bb65262493'});
       expect(categories.length === 0 && Array.isArray(categories)).toBeTruthy();
     });
   })

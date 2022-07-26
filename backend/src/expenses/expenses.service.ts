@@ -30,7 +30,7 @@ export class ExpensesService {
 
     //case insensitive, validating category
     const existingCategory = await this.categoryModel
-      .findOne({ name: {$regex: expense.categoryName, $options: "i"} })
+      .findOne({ name: {$regex: expense.categoryName, $options: "i"}, userId: expense.userId  })
       .exec();
     if (!existingCategory) throw new CategoryDoesntExist();
 
@@ -38,7 +38,7 @@ export class ExpensesService {
     return createdExpense;
   }
 
-  async getExpenses(userId: string) {
+  async getExpensesByUser(userId: string) {
 
     const expenses = await this.expenseModel.find({userId}).sort({ date: -1 }).exec();
     return expenses;
