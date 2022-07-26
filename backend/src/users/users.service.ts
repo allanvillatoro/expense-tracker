@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { EmailAlreadyExists } from '../exceptions/email-already-exists.exception';
 import { User } from '../schemas/user.schema';
 import { UserDTO } from './dto/user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +19,14 @@ export class UsersService {
       .exec();
     if (existingUser) throw new EmailAlreadyExists();
 
-    const createdUser = await new this.userModel(user).save();
-    return createdUser as UserDTO;
+    const { password, ...userData } = user;
+    const userPasswordHash = {
+      ...userData,
+      password: bcrypt.hashSync(password, 10)
+    };
+
+    await new this.userModel(userPasswordHash).save();
+    delete userPasswordHash.password;
+    return userPasswordHash;
   }
 }
