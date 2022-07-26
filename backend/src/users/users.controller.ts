@@ -9,7 +9,7 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
+  @Post('register')
   @ApiBadRequestResponse({ description: new EmailAlreadyExists().message })
   register(@Body(new ValidationPipe()) user: UserDTO) {
     return this.usersService.register(user);
