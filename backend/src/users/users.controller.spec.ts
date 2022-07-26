@@ -68,7 +68,7 @@ describe('UsersController', () => {
       const user = await usersController.login(LoginUserDTOStub());
       expect(user.email).toBe(UserDTOStub().email);
     });
-    it('should return UnauthorizedException exception', async () => {
+    it('should return UnauthorizedException (401) exception', async () => {
       await expect(usersController.login(LoginUserDTOStub()))
       .rejects.
       toThrow(UnauthorizedException);
