@@ -7,15 +7,16 @@ import { User, UserSchema } from '../schemas/user.schema';
 import { UserDTOStub } from '../../test/stubs/user.dto.stub';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
+import { LoginUserDTOStub } from '../../test/stubs/login-user.dto.stub';
+import { UnauthorizedException } from '@nestjs/common';
 
 describe('UsersController', () => {
-
   let usersController: UsersController;
   let mongod: MongoMemoryServer;
   let mongoConnection: Connection;
   let userModel: Model<User>;
 
-  beforeAll(async()=>{
+  beforeAll(async () => {
     mongod = await MongoMemoryServer.create();
     const uri = mongod.getUri();
     mongoConnection = (await connect(uri)).connection;
@@ -24,7 +25,10 @@ describe('UsersController', () => {
       controllers: [UsersController],
       providers: [
         UsersService,
-        { provide: getConnectionToken("DatabaseConnection"), useValue: mongoConnection },
+        {
+          provide: getConnectionToken('DatabaseConnection'),
+          useValue: mongoConnection,
+        },
         { provide: getModelToken('users'), useValue: userModel },
       ],
     }).compile();
@@ -45,18 +49,29 @@ describe('UsersController', () => {
     }
   });
 
-  describe ("registerUser",()=>{
-    it("should return the saved user", async () => {
+  describe('registerUser', () => {
+    it('should return the saved user', async () => {
       const createdUser = await usersController.register(UserDTOStub());
       expect(createdUser.email).toBe(UserDTOStub().email);
     });
-
-    it("should return EmailAlreadyExists (Bad Request - 400) exception", async () => {
-      await (new userModel(UserDTOStub()).save());
-      await expect(usersController.register(UserDTOStub()))
-        .rejects
-        .toThrow(EmailAlreadyExists);
+    it('should return EmailAlreadyExists (Bad Request - 400) exception', async () => {
+      await new userModel(UserDTOStub()).save();
+      await expect(usersController.register(UserDTOStub())).rejects.toThrow(
+        EmailAlreadyExists,
+      );
     });
-  })
+  });
 
+  describe('loginUser', () => {
+    it('should return the corresponding saved user', async () => {
+      await new userModel(UserDTOStub()).save();
+      const user = await usersController.login(LoginUserDTOStub());
+      expect(user.email).toBe(UserDTOStub().email);
+    });
+    it('should return UnauthorizedException exception', async () => {
+      await expect(usersController.login(LoginUserDTOStub()))
+      .rejects.
+      toThrow(UnauthorizedException);
+    });
+  });
 });
