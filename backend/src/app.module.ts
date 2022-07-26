@@ -9,18 +9,20 @@ import { Category, CategorySchema } from './schemas/category.schema';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { User, UserSchema } from './schemas/user.schema';
-
-//temporary
-const connection = `mongodb+srv://allanvillatoro:Vanguardia2022@expense-tracker-db.5q8qdxt.mongodb.net/expensetracker?retryWrites=true&w=majority`;
+import { ConfigModule } from '@nestjs/config';
+import { EnvConfiguration } from './config/env.config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [EnvConfiguration]
+    }),
     MongooseModule.forFeature([
       { name: Expense.name, schema: ExpenseSchema },
       { name: Category.name, schema: CategorySchema },
       { name: User.name, schema: UserSchema }
     ]),
-    MongooseModule.forRoot(connection)
+    MongooseModule.forRoot(process.env.MONGODB)
   ],
   controllers: [ExpensesController, CategoriesController, UsersController],
   providers: [ExpensesService, CategoriesService, UsersService],
