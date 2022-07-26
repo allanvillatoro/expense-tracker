@@ -4,6 +4,7 @@ export const CategoryDTOStub = (): CategoryDTO => {
     return {
         name: 'drinks',
         budget: 400,
-        alarmThreshold: 80
+        alarmThreshold: 80,
+        userId: '62df501ee11250bb65262493'
     };
   };

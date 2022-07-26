@@ -1,4 +1,4 @@
-import { IsInt, IsPositive, IsString, Max, Min, MinLength } from 'class-validator';
+import { IsInt, IsMongoId, IsPositive, IsString, Max, Min, MinLength } from 'class-validator';
 
 export class CategoryDTO {
   @IsString()
@@ -11,4 +11,8 @@ export class CategoryDTO {
   @Min(50)
   @Max(80)
   readonly alarmThreshold: number;
+
+  @IsString()
+  @IsMongoId()
+  readonly userId: string;
 }

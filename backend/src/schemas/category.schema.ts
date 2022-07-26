@@ -11,6 +11,10 @@ export class Category {
   budget: number;
   @Prop({ required: true })
   alarmThreshold: number;
+
+  //adding user relation
+  @Prop({ required: true })
+  userId: string;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
