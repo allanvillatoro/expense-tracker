@@ -21,7 +21,7 @@ describe('UsersController', () => {
     mongod = await MongoMemoryServer.create();
     const uri = mongod.getUri();
     mongoConnection = (await connect(uri)).connection;
-    userModel = mongoConnection.model('users', UserSchema);
+    userModel = mongoConnection.model(User.name, UserSchema);
     const app: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
       providers: [
@@ -30,7 +30,7 @@ describe('UsersController', () => {
           provide: getConnectionToken('DatabaseConnection'),
           useValue: mongoConnection,
         },
-        { provide: getModelToken('users'), useValue: userModel },
+        { provide: getModelToken(User.name), useValue: userModel },
       ],
     }).compile();
     usersController = app.get<UsersController>(UsersController);

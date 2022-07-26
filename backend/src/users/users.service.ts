@@ -14,7 +14,7 @@ import { LoginUserDTO } from './dto/login-user.dto';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel('users')
+    @InjectModel(User.name)
     private readonly userModel: Model<User>,
   ) {}
 

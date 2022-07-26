@@ -26,9 +26,9 @@ describe('ExpensesController', () => {
     const uri = mongod.getUri();
     mongoConnection = (await connect(uri)).connection;
 
-    expenseModel = mongoConnection.model('expenses', ExpenseSchema);
-    categoryModel = mongoConnection.model('expensecategories', CategorySchema);
-    userModel = mongoConnection.model('users', UserSchema);
+    expenseModel = mongoConnection.model(Expense.name, ExpenseSchema);
+    categoryModel = mongoConnection.model(Category.name, CategorySchema);
+    userModel = mongoConnection.model(User.name, UserSchema);
 
     const app: TestingModule = await Test.createTestingModule({
       controllers: [ExpensesController],
@@ -38,12 +38,12 @@ describe('ExpensesController', () => {
           provide: getConnectionToken('DatabaseConnection'),
           useValue: mongoConnection,
         },
-        { provide: getModelToken('expenses'), useValue: expenseModel },
+        { provide: getModelToken(Expense.name), useValue: expenseModel },
         {
-          provide: getModelToken('expensecategories'),
+          provide: getModelToken(Category.name),
           useValue: categoryModel,
         },
-        { provide: getModelToken('users'), useValue: userModel },
+        { provide: getModelToken(User.name), useValue: userModel },
       ],
     }).compile();
     expensesController = app.get<ExpensesController>(ExpensesController);

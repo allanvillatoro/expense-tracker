@@ -17,7 +17,7 @@ export class CategoriesController {
         return this.categoriesService.postCategory(category);
     }
 
-    @Get()
+    @Get(':userId')
     getCategoriesByUser(@Param() {userId}: ParamsWithUserId) {
       return this.categoriesService.getCategoriesByUser(userId);
     }

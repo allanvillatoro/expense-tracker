@@ -10,9 +10,9 @@ import { UserDoesntExist } from '../exceptions/user-doesnt-exist.exception';
 @Injectable()
 export class CategoriesService {
   constructor(
-    @InjectModel('expensecategories')
+    @InjectModel(Category.name)
     private readonly categoryModel: Model<Category>,
-    @InjectModel('users')
+    @InjectModel(User.name)
     private readonly userModel: Model<User>,
   ) {}
 

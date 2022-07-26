@@ -22,16 +22,16 @@ describe('CategoriesController', () => {
     mongod = await MongoMemoryServer.create();
     const uri = mongod.getUri();
     mongoConnection = (await connect(uri)).connection;
-    categoryModel = mongoConnection.model('expensecategories', CategorySchema);
-    userModel = mongoConnection.model('users', UserSchema);
+    categoryModel = mongoConnection.model(Category.name, CategorySchema);
+    userModel = mongoConnection.model(User.name, UserSchema);
     
     const app: TestingModule = await Test.createTestingModule({
       controllers: [CategoriesController],
       providers: [
         CategoriesService,
         { provide: getConnectionToken("DatabaseConnection"), useValue: mongoConnection },
-        { provide: getModelToken('expensecategories'), useValue: categoryModel },
-        { provide: getModelToken('users'), useValue: userModel }
+        { provide: getModelToken(Category.name), useValue: categoryModel },
+        { provide: getModelToken(User.name), useValue: userModel }
       ],
     }).compile();
     categoriesController = app.get<CategoriesController>(CategoriesController);
@@ -109,4 +109,3 @@ describe('CategoriesController', () => {
     });
   })
 });
-

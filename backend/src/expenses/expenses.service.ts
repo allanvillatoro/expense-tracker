@@ -12,11 +12,11 @@ import ParamsWithUserId from '../utils/params-with-id';
 @Injectable()
 export class ExpensesService {
   constructor(
-    @InjectModel('expenses')
+    @InjectModel(Expense.name)
     private readonly expenseModel: Model<Expense>,
-    @InjectModel('expensecategories')
+    @InjectModel(Category.name)
     private readonly categoryModel: Model<Category>,
-    @InjectModel('users')
+    @InjectModel(User.name)
     private readonly userModel: Model<User>,
   ) {}
 
