@@ -5,6 +5,9 @@ import { Category } from '../schemas/category.schema';
 import { Expense } from '../schemas/expense.schema';
 import { ExpenseDTO } from './dto/expense.dto';
 import { CategoryDoesntExist } from '../exceptions/category-doesnt-exist.exception';
+import { User } from '../schemas/user.schema';
+import { UserDoesntExist } from '../exceptions/user-doesnt-exist.exception';
+import ParamsWithUserId from '../utils/params-with-id';
 
 @Injectable()
 export class ExpensesService {
@@ -13,20 +16,31 @@ export class ExpensesService {
     private readonly expenseModel: Model<Expense>,
     @InjectModel('expensecategories')
     private readonly categoryModel: Model<Category>,
+    @InjectModel('users')
+    private readonly userModel: Model<User>,
   ) {}
 
   async postExpense(expense: ExpenseDTO) {
-    //case insensitive
+
+    //validating user
+    const existingUser = await this.userModel
+      .findById(expense.userId)
+      .exec();
+    if (!existingUser) throw new UserDoesntExist();
+
+    //case insensitive, validating category
     const existingCategory = await this.categoryModel
       .findOne({ name: {$regex: expense.categoryName, $options: "i"} })
       .exec();
     if (!existingCategory) throw new CategoryDoesntExist();
+
     const createdExpense = await new this.expenseModel(expense).save();
-    return createdExpense as ExpenseDTO;
+    return createdExpense;
   }
 
-  async getExpenses() {
-    const expenses = await this.expenseModel.find().sort({ date: -1 }).exec();
-    return expenses as Array<ExpenseDTO>;
+  async getExpenses(userId: string) {
+
+    const expenses = await this.expenseModel.find({userId}).sort({ date: -1 }).exec();
+    return expenses;
   }
 }

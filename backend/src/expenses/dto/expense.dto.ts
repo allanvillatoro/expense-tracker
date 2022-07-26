@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsDate, IsInt, IsPositive, IsString, MaxDate, MinLength } from 'class-validator';
+import { IsDate, IsInt, IsMongoId, IsPositive, IsString, MaxDate, MinLength } from 'class-validator';
 
 export class ExpenseDTO {
   @IsString()
@@ -15,4 +15,8 @@ export class ExpenseDTO {
   @Transform( ({ value }) => new Date(value))
   @MaxDate(new Date())
   readonly date: Date;
+
+  @IsString()
+  @IsMongoId()
+  readonly userId: string;
 }

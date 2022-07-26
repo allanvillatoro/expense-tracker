@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiBadRequestResponse } from '@nestjs/swagger';
+import ParamsWithUserId from '../utils/params-with-id';
 import { CategoryDoesntExist } from '../exceptions/category-doesnt-exist.exception';
 import { ValidationPipe } from '../pipes/validation.pipe';
 import { ExpenseDTO } from './dto/expense.dto';
@@ -16,8 +17,8 @@ export class ExpensesController {
         return this.expensesService.postExpense(expense);
     }
 
-    @Get()
-    getExpenses() {
-      return this.expensesService.getExpenses();
+    @Get(':userId')
+    getExpensesByUser(@Param() {userId}: ParamsWithUserId) {
+      return this.expensesService.getExpenses(userId);
     }
 }

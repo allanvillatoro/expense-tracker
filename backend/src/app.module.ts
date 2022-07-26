@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ExpensesController } from './expenses/expenses.controller';
 import { ExpensesService } from './expenses/expenses.service';
 import { CategoriesController } from './categories/categories.controller';
@@ -24,7 +22,7 @@ const connection = `mongodb+srv://allanvillatoro:Vanguardia2022@expense-tracker-
     ]),
     MongooseModule.forRoot(connection)
   ],
-  controllers: [AppController, ExpensesController, CategoriesController, UsersController],
-  providers: [AppService, ExpensesService, CategoriesService, UsersService],
+  controllers: [ExpensesController, CategoriesController, UsersController],
+  providers: [ExpensesService, CategoriesService, UsersService],
 })
 export class AppModule {}

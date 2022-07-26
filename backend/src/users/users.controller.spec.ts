@@ -9,6 +9,7 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { LoginUserDTOStub } from '../../test/stubs/login-user.dto.stub';
 import { UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 
 describe('UsersController', () => {
   let usersController: UsersController;
@@ -64,14 +65,20 @@ describe('UsersController', () => {
 
   describe('loginUser', () => {
     it('should return the corresponding saved user', async () => {
-      await new userModel(UserDTOStub()).save();
+      const { password, ...userData } = UserDTOStub();
+      const userPasswordHash = {
+        ...userData,
+        password: bcrypt.hashSync(password, 10),
+      };
+      await new userModel(userPasswordHash).save();
       const user = await usersController.login(LoginUserDTOStub());
       expect(user.email).toBe(UserDTOStub().email);
     });
+
     it('should return UnauthorizedException (401) exception', async () => {
-      await expect(usersController.login(LoginUserDTOStub()))
-      .rejects.
-      toThrow(UnauthorizedException);
+      await expect(usersController.login(LoginUserDTOStub())).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
   });
 });

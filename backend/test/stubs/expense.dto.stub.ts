@@ -5,6 +5,7 @@ export const ExpenseDTOStub = (): ExpenseDTO => {
         description: 'Coca Cola',
         categoryName: 'drinks',
         amount: 30,
-        date: new Date(2022,7,23)
+        date: new Date(2022,7,23),
+        userId: '62df501ee11250bb65262493'
     };
   };

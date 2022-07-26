@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type CategoryDocument = Category & Document;
 
-@Schema({versionKey: false})
+@Schema({ versionKey: false })
 export class Category {
   @Prop({ unique: true, required: true })
   name: string;
