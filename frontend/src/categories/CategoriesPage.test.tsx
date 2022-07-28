@@ -4,5 +4,9 @@ import { CategoriesPage } from "./CategoriesPage";
 test("should render CategoriesPage", () => {
   render(<CategoriesPage />);
   //screen.debug();
-  expect(screen.getByText("CategoriesPage")).toBeTruthy();
+  //table
+  expect(screen.getByRole("table")).toBeInTheDocument();
+  //Add button
+  expect(screen.getByRole("button")).toBeInTheDocument();
+  expect(screen.getByText("Add")).toBeTruthy();
 });

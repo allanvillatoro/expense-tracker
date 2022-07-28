@@ -3,7 +3,7 @@ import { AddCategoryForm } from "./AddCategoryForm";
 
 test("renders AddCategoryForm with form controls", () => {
   render(<AddCategoryForm />);
-  screen.debug();
+  //screen.debug();
   //form
   expect(screen.getByRole("form")).toBeInTheDocument();
   //description

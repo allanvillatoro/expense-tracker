@@ -6,10 +6,10 @@ import { ExpensesTable } from "./ExpensesTable";
 
 export const ExpensesPage = () => {
   return (
-    <div className="col-12 col-lg-10 offset-lg-1 expensesPageContainer">
+    <div className="col-12 col-lg-10 offset-lg-1 pageContainer">
       <h2>Expenses</h2>
       {/* Button trigger modal */}
-      <div className="expensesButtonContainer" style={{ alignSelf: "end" }}>
+      <div style={{ alignSelf: "end" }}>
         <button
           type="button"
           className="btn btn-dark"
