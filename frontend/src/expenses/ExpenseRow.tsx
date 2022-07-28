@@ -10,7 +10,7 @@ export const ExpenseRow = ({expense}: ExpenseRowProps) => {
     <tr>
         <td>{expense.description}</td>
         <td>{expense.categoryName}</td>
-        <td>{expense.amount}</td>
+        <td>${expense.amount}</td>
         <td>{expense.date.toLocaleDateString()}</td>
     </tr>
   )
