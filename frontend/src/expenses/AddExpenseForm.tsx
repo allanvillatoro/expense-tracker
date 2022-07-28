@@ -33,7 +33,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
   return (
     <form aria-label="form" onSubmit={formik.handleSubmit}>
       <div className="form-group">
-        <label htmlFor="name">Description</label>
+        <label htmlFor="description">Description</label>
         <input
           type="text"
           className="form-control"
@@ -44,7 +44,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="name">Category</label>
+        <label htmlFor="categoryName">Category</label>
         <select
           id="categoryName"
           className="form-control"
@@ -63,7 +63,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
         </select>
       </div>
       <div className="form-group">
-        <label htmlFor="name">Amount</label>
+        <label htmlFor="amount">Amount</label>
         <input
           type="number"
           className="form-control"
@@ -74,7 +74,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="name">Date</label>
+        <label htmlFor="date">Date</label>
         <DatePicker
           id="date"
           selected={formik.values.date}
