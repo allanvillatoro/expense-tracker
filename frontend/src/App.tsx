@@ -1,14 +1,12 @@
 import React from "react";
 import "./Styles.css";
-import { ExpensesTable } from "./expenses/ExpensesTable";
-import { expensesListStub } from "./expenses/expensesListStub";
+import { ExpensesPage } from "./expenses/ExpensesPage";
 
 function App() {
   return (
     <div>
-      <header></header>
-      Expense Tracker
-      <ExpensesTable expenses={expensesListStub} />
+      <header>Expense Tracker</header>
+      <ExpensesPage />
     </div>
   );
 }
