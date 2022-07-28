@@ -6,7 +6,7 @@ const expenseStub2: Expense = {
   description: "Salad",
   categoryName: "food",
   amount: 150,
-  date: new Date(2022, 7, 27),
+  date: new Date(2022, 6, 27),
   userId: "62e01522afcf618b284ee5d4",
 };
 
@@ -15,7 +15,7 @@ const expenseStub3: Expense = {
   description: "Donuts",
   categoryName: "food",
   amount: 40,
-  date: new Date(2022, 7, 27),
+  date: new Date(2022, 6, 27),
   userId: "62e01522afcf618b284ee5d4",
 };
 

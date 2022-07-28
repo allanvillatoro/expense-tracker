@@ -11,7 +11,7 @@ export const ExpenseRow = ({expense}: ExpenseRowProps) => {
         <td>{expense.description}</td>
         <td>{expense.categoryName}</td>
         <td>${expense.amount}</td>
-        <td>{expense.date.toLocaleDateString()}</td>
+        <td>{expense.date.toLocaleDateString('en-us', { weekday:'long', year:'numeric', month: 'long', day:'numeric' })}</td>
     </tr>
   )
 }
