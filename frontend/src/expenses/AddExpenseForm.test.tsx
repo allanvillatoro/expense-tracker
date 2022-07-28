@@ -17,6 +17,8 @@ test("renders AddExpenseForm with form controls", () => {
   expect(screen.getByRole("spinbutton")).toBeTruthy();
   //category
   expect(screen.getByRole("combobox")).toBeTruthy();
+  //temporary
+  expect(screen.getAllByRole("option").length).toBe(categoriesListStub.length + 1)
   //save button
   expect(screen.getByRole("button")).toBeTruthy();
 });

@@ -6,13 +6,13 @@ import { ExpensesTable } from "./ExpensesTable";
 
 export const ExpensesPage = () => {
   return (
-    <div className="expensesPageContainer">
+    <div className="col-12 col-lg-10 offset-lg-1 expensesPageContainer">
       <h2>Expenses</h2>
       {/* Button trigger modal */}
       <div className="expensesButtonContainer" style={{ alignSelf: "end" }}>
         <button
           type="button"
-          className="btn btn-primary"
+          className="btn btn-dark"
           data-bs-toggle="modal"
           data-bs-target="#AddExpenseFormModal"
           style={{ width: 100 }}
@@ -20,6 +20,7 @@ export const ExpensesPage = () => {
           Add
         </button>
       </div>
+      <br/>
 
       {/* Modal */}
       <div

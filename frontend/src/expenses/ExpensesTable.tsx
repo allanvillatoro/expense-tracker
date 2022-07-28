@@ -9,7 +9,7 @@ interface ExpensesTableProps {
 export const ExpensesTable = ({ expenses }: ExpensesTableProps) => {
   return (
     <table className="table table-striped">
-      <thead>
+      <thead className="table-dark">
         <tr>
           <th>Description</th>
           <th>Category</th>

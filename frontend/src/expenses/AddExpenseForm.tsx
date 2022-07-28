@@ -38,7 +38,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
           type="text"
           className="form-control"
           id="description"
-          placeholder="Type a description"
+          placeholder="Type a description with at least 1 character"
           onChange={formik.handleChange}
           value={formik.values.description}
         />
@@ -86,7 +86,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
       </div>
       <br />
       <button
-        className="btn btn-primary"
+        className="btn btn-dark"
         style={{ width: "100%" }}
         type="submit"
       >
