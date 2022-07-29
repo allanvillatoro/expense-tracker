@@ -12,7 +12,7 @@ export const ExpensesPage = () => {
       <div style={{ alignSelf: "end" }}>
         <button
           type="button"
-          className="btn btn-dark"
+          className="btn btn-success"
           data-bs-toggle="modal"
           data-bs-target="#AddExpenseFormModal"
           style={{ width: 100 }}

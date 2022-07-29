@@ -57,7 +57,7 @@ export const AddCategoryForm = () => {
         />
       </div>
       <br />
-      <button className="btn btn-dark" style={{ width: "100%" }} type="submit">
+      <button className="btn btn-danger" style={{ width: "100%" }} type="submit">
         Save
       </button>
     </form>

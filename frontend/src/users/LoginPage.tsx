@@ -31,7 +31,7 @@ export const LoginPage = () => {
 
   return (
     <div
-      className="col-12 col-lg-6 offset-lg-3 pageContainer"
+      className="col-12 col-lg-4 offset-lg-4 pageContainer"
       style={{ height: 400 }}
     >
       <h2 className="text-center">Login</h2>
@@ -60,7 +60,7 @@ export const LoginPage = () => {
         </div>
         <br />
         <button
-          className="btn btn-dark"
+          className="btn btn-danger"
           style={{ width: "100%" }}
           type="submit"
         >
