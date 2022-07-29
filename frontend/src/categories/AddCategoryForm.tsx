@@ -1,5 +1,8 @@
 import React from "react";
 import { useFormik } from "formik";
+import { CategoryPost, postCategory } from "./categoriesSlice";
+import swal from "sweetalert";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 
 interface CategoryForm {
   name: string;
@@ -14,10 +17,22 @@ const initialValues: CategoryForm = {
 };
 
 export const AddCategoryForm = () => {
+  const dispatch = useAppDispatch();
+  const errorOnCreating = useAppSelector((state) => state.categories.errorOnCreating);
   const formik = useFormik({
     initialValues,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values, { resetForm }) => {
+      //Temporary
+      const newCategory: CategoryPost = {
+        ...values,
+        userId: "62e01522afcf618b284ee5d4", //update this (temporary)
+      };
+      dispatch(postCategory(newCategory)).then((response) => {
+        if (response.type === "categories/postCategory/fulfilled"){
+          swal("Category saved successfully");
+          resetForm()
+        }
+      });
     },
   });
   return (
@@ -45,21 +60,27 @@ export const AddCategoryForm = () => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="alarmThreshold">Alarm Threshold</label>
+        <label htmlFor="alarmThreshold">Alarm Threshold (between 50% and 80%)</label>
         <input
           type="number"
           className="form-control"
           id="alarmThreshold"
           min="50"
           max="80"
+          placeholder="Type a number between 50 and 80"
           onChange={formik.handleChange}
           value={formik.values.alarmThreshold}
         />
       </div>
       <br />
-      <button className="btn btn-danger" style={{ width: "100%" }} type="submit">
+      <button
+        className="btn btn-danger"
+        style={{ width: "100%" }}
+        type="submit"
+      >
         Save
       </button>
+      {errorOnCreating && <span>{errorOnCreating}</span>}
     </form>
   );
 };

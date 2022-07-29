@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormik, ErrorMessage } from "formik";
+import { useFormik } from "formik";
 
 interface RegisterForm {
   fullName: string;

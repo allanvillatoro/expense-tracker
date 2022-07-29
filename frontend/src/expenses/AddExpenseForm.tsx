@@ -26,7 +26,9 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
   // be called when the form is submitted
   const formik = useFormik({
     initialValues,
-    onSubmit: (values) => {
+    onSubmit: (values, {resetForm}) => {
+      //if it's okay
+      resetForm()
       alert(JSON.stringify(values, null, 2));
     },
   });

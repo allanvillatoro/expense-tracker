@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AddCategoryForm } from "./AddCategoryForm";
 import { categoriesListStub } from "./categoriesListStub";
 import { CategoriesTable } from "./CategoriesTable";
+import { addCategory, getCategoriesByUser } from "./categoriesSlice";
+import { categoryStub } from "./categoryStub";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 
 export const CategoriesPage = () => {
+  const categories = useAppSelector((state) => state.categories.categories);
+  const categoriesStatus = useAppSelector((state) => state.categories.status);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    //update this (temporary)
+    const userId = "62e01522afcf618b284ee5d4";
+    if (categoriesStatus === "idle") {
+      dispatch(getCategoriesByUser(userId));
+    }
+  }, [categoriesStatus, dispatch]);
+
   return (
-    <div className="col-12 col-lg-10 offset-lg-1 pageContainer">
+    <div className="col-12 col-lg-8 offset-lg-2 pageContainer">
       <h2>Categories</h2>
       {/* Button trigger modal */}
       <div style={{ alignSelf: "end" }}>
@@ -48,7 +63,7 @@ export const CategoriesPage = () => {
           </div>
         </div>
       </div>
-      <CategoriesTable categories={categoriesListStub} />
+      <CategoriesTable categories={categories} />
     </div>
   );
 };
