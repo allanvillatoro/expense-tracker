@@ -1,31 +1,28 @@
 import React from "react";
 import { useFormik } from "formik";
-
-interface UserLoginForm {
-  email: string;
-  password: string;
-}
+import { UserLoginForm } from "../interfaces/UserPost";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { login } from "./usersSlice";
+import { useNavigate } from "react-router-dom";
 
 const initialValues: UserLoginForm = {
   email: "",
   password: "",
 };
-/*
-const validate = (values: UserLoginForm) => {
-  let errors = {};
-  if (!values.email) {
-    errors = { ...errors, email: "Required" };
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors = { ...errors, email: "Invalid email address" };
-  }
-  return errors;
-};*/
 
 export const LoginPage = () => {
+  let navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const errorsOnLogin = useAppSelector((state) => state.users.errorsOnLogin);
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      dispatch(login(values)).then((response) => {
+        if (response.type === "users/login/fulfilled") {
+          //go to home
+          navigate("../", { replace: true })
+        }
+      });
     },
   });
 
@@ -66,12 +63,13 @@ export const LoginPage = () => {
         >
           Login
         </button>
+        {errorsOnLogin && <span>{errorsOnLogin}</span>}
       </form>
       <br />
       <div style={{ alignSelf: "center" }}>
-          <span>Not registered yet? </span>
-          <a href="/register">Create an account</a>
-        </div>
+        <span>Not registered yet? </span>
+        <a href="/register">Create an account</a>
+      </div>
     </div>
   );
 };

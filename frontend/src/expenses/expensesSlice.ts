@@ -25,6 +25,10 @@ export const expensesSlice = createSlice({
     addExpense: (state, action: PayloadAction<Expense>) => {
       state.expenses = [action.payload, ...state.expenses];
     },
+    clearExpenses: (state) => {
+      state.expenses = [];
+      state.status = "idle";
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -55,7 +59,7 @@ export const expensesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addExpense } = expensesSlice.actions;
+export const { addExpense, clearExpenses } = expensesSlice.actions;
 
 export default expensesSlice.reducer;
 

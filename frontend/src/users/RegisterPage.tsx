@@ -1,5 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { register } from "./usersSlice";
+import { UserPost } from "../interfaces/UserPost";
+import { useNavigate } from "react-router-dom";
 
 interface RegisterForm {
   fullName: string;
@@ -54,11 +58,24 @@ const validate = (values: RegisterForm) => {
 };
 
 export const RegisterPage = () => {
+  let navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const errorOnRegistering = useAppSelector((state) => state.users.errorsOnRegistering);
   const formik = useFormik({
     initialValues,
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      const newUserPost : UserPost = {
+        email: values.email,
+        fullName: values.fullName,
+        password: values.password
+      }
+      dispatch(register(newUserPost)).then((response) => {
+        if (response.type === "users/register/fulfilled") {
+          //go to login page
+          navigate("../login", { replace: true })
+        }
+      });
     },
   });
 
@@ -127,6 +144,7 @@ export const RegisterPage = () => {
         >
           Register
         </button>
+        {errorOnRegistering && <span>{errorOnRegistering}</span>}
       </form>
     </div>
   );

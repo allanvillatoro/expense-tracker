@@ -25,6 +25,10 @@ export const categoriesSlice = createSlice({
     addCategory: (state, action: PayloadAction<Category>) => {
       state.categories = [action.payload, ...state.categories];
     },
+    clearCategories: (state) => {
+      state.categories = [];
+      state.status = "idle"
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -55,7 +59,7 @@ export const categoriesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addCategory } = categoriesSlice.actions;
+export const { addCategory, clearCategories } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;
 

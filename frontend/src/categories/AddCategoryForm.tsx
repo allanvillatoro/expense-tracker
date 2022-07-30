@@ -19,21 +19,24 @@ const initialValues: CategoryForm = {
 
 export const AddCategoryForm = () => {
   const dispatch = useAppDispatch();
+  const loggedUser = useAppSelector((state) => state.users.user);
   const errorOnCreating = useAppSelector((state) => state.categories.errorOnCreating);
   const formik = useFormik({
     initialValues,
     onSubmit: async (values, { resetForm }) => {
       //Temporary
-      const newCategory: CategoryPost = {
-        ...values,
-        userId: "62e01522afcf618b284ee5d4", //update this (temporary)
-      };
-      dispatch(postCategory(newCategory)).then((response) => {
-        if (response.type === "categories/postCategory/fulfilled"){
-          swal("Category saved successfully");
-          resetForm()
-        }
-      });
+      if (loggedUser){
+        const newCategory: CategoryPost = {
+          ...values,
+          userId: loggedUser._id //"62e01522afcf618b284ee5d4",
+        };
+        dispatch(postCategory(newCategory)).then((response) => {
+          if (response.type === "categories/postCategory/fulfilled"){
+            swal("Category saved successfully");
+            resetForm()
+          }
+        });
+      }
     },
   });
   return (

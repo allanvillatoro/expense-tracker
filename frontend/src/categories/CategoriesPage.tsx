@@ -1,23 +1,23 @@
 import React, { useEffect } from "react";
 import { AddCategoryForm } from "./AddCategoryForm";
-import { categoriesListStub } from "./categoriesListStub";
 import { CategoriesTable } from "./CategoriesTable";
 import { getCategoriesByUser } from "./categoriesSlice";
-import { categoryStub } from "./categoryStub";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 
 export const CategoriesPage = () => {
   const categories = useAppSelector((state) => state.categories.categories);
   const categoriesStatus = useAppSelector((state) => state.categories.status);
+  const loggedUser = useAppSelector((state) => state.users.user);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    //update this (temporary)
-    const userId = "62e01522afcf618b284ee5d4";
-    if (categoriesStatus === "idle") {
-      dispatch(getCategoriesByUser(userId));
+    //const userId = "62e01522afcf618b284ee5d4";
+    if (loggedUser){
+      if (categoriesStatus === "idle") {
+        dispatch(getCategoriesByUser(loggedUser._id));
+      }
     }
-  }, [categoriesStatus, dispatch]);
+  }, [categoriesStatus,loggedUser, dispatch]);
 
   return (
     <div className="col-12 col-lg-8 offset-lg-2 pageContainer">
