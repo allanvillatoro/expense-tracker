@@ -49,7 +49,7 @@ export const categoriesSlice = createSlice({
         state.errorOnCreating = undefined;
       })
       .addCase(postCategory.rejected, (state, action) => {
-        state.errorOnCreating = 'Error. Please check that category does not already exist.';
+        state.errorOnCreating = 'Error. Please check out that category does not already exist.';
       })
   },
 });

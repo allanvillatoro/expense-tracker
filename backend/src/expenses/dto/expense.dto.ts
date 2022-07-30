@@ -13,7 +13,7 @@ export class ExpenseDTO {
   readonly amount: number;
   @IsDate()
   @Transform( ({ value }) => new Date(value))
-  @MaxDate(new Date())
+  //@MaxDate(new Date())
   readonly date: Date;
 
   @IsString()

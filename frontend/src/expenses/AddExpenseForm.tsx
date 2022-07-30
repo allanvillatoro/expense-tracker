@@ -2,6 +2,10 @@ import React from "react";
 import { useFormik } from "formik";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ExpensePost } from "../interfaces/ExpensePost";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { postExpense } from "./expensesSlice";
+import swal from "sweetalert";
 
 interface ExpenseForm {
   description: string;
@@ -24,12 +28,22 @@ interface AddExpenseFormProps {
 export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
+  const dispatch = useAppDispatch();
+  const errorOnCreating = useAppSelector((state) => state.expenses.errorOnCreating);
   const formik = useFormik({
     initialValues,
     onSubmit: (values, {resetForm}) => {
-      //if it's okay
-      resetForm()
-      alert(JSON.stringify(values, null, 2));
+      //Temporary
+      const newExpense: ExpensePost = {
+        ...values,
+        userId: "62e01522afcf618b284ee5d4", //update this (temporary)
+      };
+      dispatch(postExpense(newExpense)).then((response) => {
+        if (response.type === "expenses/postExpense/fulfilled"){
+          swal("Expense saved successfully");
+          resetForm()
+        }
+      });
     },
   });
   return (
@@ -94,6 +108,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
       >
         Save
       </button>
+      {errorOnCreating && <span>{errorOnCreating}</span>}
     </form>
   );
 };

@@ -1,13 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import { AddExpenseForm } from "./AddExpenseForm";
 import { categoriesListStub } from "../categories/categoriesListStub";
+import { Provider } from "react-redux";
+import { store } from "../app/store";
 
 test("renders AddExpenseForm with form controls", () => {
   render(
-    <AddExpenseForm
-      categories={categoriesListStub.map((category) => category.name)}
-    />
+    <Provider store={store}>
+      <AddExpenseForm
+        categories={categoriesListStub.map((category) => category.name)}
+      />
+    </Provider>
   );
+
   //screen.debug();
   //form
   expect(screen.getByRole("form")).toBeInTheDocument();
@@ -18,7 +23,9 @@ test("renders AddExpenseForm with form controls", () => {
   //category
   expect(screen.getByRole("combobox")).toBeTruthy();
   //temporary
-  expect(screen.getAllByRole("option").length).toBe(categoriesListStub.length + 1)
+  expect(screen.getAllByRole("option").length).toBe(
+    categoriesListStub.length + 1
+  );
   //save button
   expect(screen.getByRole("button")).toBeTruthy();
 });
