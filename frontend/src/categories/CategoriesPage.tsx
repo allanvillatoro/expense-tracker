@@ -5,9 +5,9 @@ import { getCategoriesByUser } from "./categoriesSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 
 export const CategoriesPage = () => {
+  const loggedUser = useAppSelector((state) => state.users.user);
   const categories = useAppSelector((state) => state.categories.categories);
   const categoriesStatus = useAppSelector((state) => state.categories.status);
-  const loggedUser = useAppSelector((state) => state.users.user);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

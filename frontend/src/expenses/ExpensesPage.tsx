@@ -7,8 +7,8 @@ import { ExpensesTable } from "./ExpensesTable";
 
 export const ExpensesPage = () => {
   const loggedUser = useAppSelector((state) => state.users.user);
-  const expenses = useAppSelector((state) => state.expenses.expenses);
   const categories = useAppSelector((state) => state.categories.categories);
+  const expenses = useAppSelector((state) => state.expenses.expenses);
   const expensesStatus = useAppSelector((state) => state.expenses.status);
   const categoriesStatus = useAppSelector((state) => state.categories.status);
   const dispatch = useAppDispatch();
