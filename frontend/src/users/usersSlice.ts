@@ -11,7 +11,7 @@ export interface UserState {
 }
 
 const initialUser : User = {
-  _id: "",
+  _id: "62e01522afcf618b284ee5d4",
   fullName: "",
   email: ""
 }

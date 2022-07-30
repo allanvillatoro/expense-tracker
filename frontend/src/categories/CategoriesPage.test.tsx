@@ -18,5 +18,5 @@ test("should render CategoriesPage", async () => {
 
   //it should contain a cell with value "gas" from the mock
   //Debe usarse data mockeada para que no afecte. Ademas deberia de estar loggeado
-  //expect(await screen.findByRole("cell", { name: "gas" })).toBeInTheDocument();
+  expect(await screen.findByRole("cell", { name: "gas" })).toBeInTheDocument();
 });

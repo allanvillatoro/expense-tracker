@@ -17,8 +17,8 @@ function App() {
 
   const handleLogout = () => {
     dispatch(logout());
-    dispatch(clearExpenses())
-    dispatch(clearCategories())
+    dispatch(clearExpenses());
+    dispatch(clearCategories());
   };
 
   return (
@@ -28,7 +28,9 @@ function App() {
           {isLoggedIn && (
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
               <div className="container-fluid">
-              <a className="navbar-brand" href="#">ExpenseTracker</a>
+                <a className="navbar-brand" href="#">
+                  ExpenseTracker
+                </a>
                 <button
                   className="navbar-toggler"
                   type="button"
@@ -70,17 +72,24 @@ function App() {
           )}
         </header>
         <div className="container">
-          {!isLoggedIn ? (
-            <LoginPage />
-          ) : (
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/" element={<MonthlyReportPage />} />
-              <Route path="/expenses" element={<ExpensesPage />} />
-              <Route path="/categories" element={<CategoriesPage />} />
-            </Routes>
-          )}
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route
+              path="/"
+              element={
+                <>{isLoggedIn ? <MonthlyReportPage /> : <LoginPage />}</>
+              }
+            />
+            <Route
+              path="/expenses"
+              element={<>{isLoggedIn ? <ExpensesPage /> : <LoginPage />}</>}
+            />
+            <Route
+              path="/categories"
+              element={<>{isLoggedIn ? <CategoriesPage /> : <LoginPage />}</>}
+            />
+          </Routes>
         </div>
       </BrowserRouter>
     </div>
