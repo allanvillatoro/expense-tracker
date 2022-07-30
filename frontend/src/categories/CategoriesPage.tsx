@@ -26,7 +26,7 @@ export const CategoriesPage = () => {
       <div style={{ alignSelf: "end" }}>
         <button
           type="button"
-          className="btn btn-danger"
+          className="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#AddCategoryFormModal"
           style={{ width: 100 }}

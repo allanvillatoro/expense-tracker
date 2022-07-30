@@ -104,7 +104,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
       </div>
       <br />
       <button
-        className="btn btn-danger"
+        className="btn btn-primary"
         style={{ width: "100%" }}
         type="submit"
       >

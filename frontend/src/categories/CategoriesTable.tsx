@@ -9,7 +9,7 @@ interface CategoriesTableProps {
 export const CategoriesTable = ({ categories }: CategoriesTableProps) => {
   return (
     <table className="table table-striped">
-      <thead className="table-dark">
+      <thead className="table-primary">
         <tr>
           <th>Category</th>
           <th>Budget</th>

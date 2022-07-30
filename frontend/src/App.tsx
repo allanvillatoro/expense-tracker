@@ -26,8 +26,9 @@ function App() {
       <BrowserRouter>
         <header>
           {isLoggedIn && (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
               <div className="container-fluid">
+              <a className="navbar-brand" href="#">ExpenseTracker</a>
                 <button
                   className="navbar-toggler"
                   type="button"
@@ -55,10 +56,9 @@ function App() {
                     </Link>
                   </div>
                   <form className="d-flex" role="search">
-                    Allan
                     <button
                       onClick={handleLogout}
-                      className="btn btn-dark"
+                      className="btn btn-primary"
                       type="submit"
                     >
                       Log out
