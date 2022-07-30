@@ -15,13 +15,11 @@ export const ExpensesPage = () => {
 
   useEffect(() => {
     //const userId = "62e01522afcf618b284ee5d4";
-    if (loggedUser) {
-      if (expensesStatus === "idle") {
-        dispatch(getExpensesByUser(loggedUser._id));
-      }
-      if (categoriesStatus === "idle") {
-        dispatch(getCategoriesByUser(loggedUser._id));
-      }
+    if (expensesStatus === "idle") {
+      dispatch(getExpensesByUser(loggedUser._id));
+    }
+    if (categoriesStatus === "idle") {
+      dispatch(getCategoriesByUser(loggedUser._id));
     }
   }, [expensesStatus, dispatch]);
 

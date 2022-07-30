@@ -4,14 +4,20 @@ import { UserLoginForm, UserPost } from "../interfaces/UserPost";
 import { usersApi } from "../api/usersApi";
 
 export interface UserState {
-  user: User | null;
+  user: User;
   isLoggedIn: boolean;
   errorsOnRegistering: string | undefined;
   errorsOnLogin: string | undefined;
 }
 
+const initialUser : User = {
+  _id: "",
+  fullName: "",
+  email: ""
+}
+
 const initialState: UserState = {
-  user: null,
+  user: {...initialUser},
   isLoggedIn: false,
   errorsOnRegistering: undefined,
   errorsOnLogin: undefined
@@ -23,7 +29,7 @@ export const usersSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.isLoggedIn = false;
-      state.user = null;
+      state.user = {...initialUser};
     },
   },
   extraReducers: (builder) => {

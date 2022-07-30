@@ -30,22 +30,22 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
   // be called when the form is submitted
   const loggedUser = useAppSelector((state) => state.users.user);
   const dispatch = useAppDispatch();
-  const errorOnCreating = useAppSelector((state) => state.expenses.errorOnCreating);
+  const errorOnCreating = useAppSelector(
+    (state) => state.expenses.errorOnCreating
+  );
   const formik = useFormik({
     initialValues,
-    onSubmit: (values, {resetForm}) => {
-      if (loggedUser){
-        const newExpense: ExpensePost = {
-          ...values,
-          userId: loggedUser._id //"62e01522afcf618b284ee5d4",
-        };
-        dispatch(postExpense(newExpense)).then((response) => {
-          if (response.type === "expenses/postExpense/fulfilled"){
-            swal("Expense saved successfully");
-            resetForm()
-          }
-        });
-      }
+    onSubmit: (values, { resetForm }) => {
+      const newExpense: ExpensePost = {
+        ...values,
+        userId: loggedUser._id, //"62e01522afcf618b284ee5d4",
+      };
+      dispatch(postExpense(newExpense)).then((response) => {
+        if (response.type === "expenses/postExpense/fulfilled") {
+          swal("Expense saved successfully");
+          resetForm();
+        }
+      });
     },
   });
   return (

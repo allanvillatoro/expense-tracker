@@ -12,12 +12,10 @@ export const CategoriesPage = () => {
 
   useEffect(() => {
     //const userId = "62e01522afcf618b284ee5d4";
-    if (loggedUser){
-      if (categoriesStatus === "idle") {
-        dispatch(getCategoriesByUser(loggedUser._id));
-      }
+    if (categoriesStatus === "idle") {
+      dispatch(getCategoriesByUser(loggedUser._id));
     }
-  }, [categoriesStatus,loggedUser, dispatch]);
+  }, [categoriesStatus, dispatch]);
 
   return (
     <div className="col-12 col-lg-8 offset-lg-2 pageContainer">
