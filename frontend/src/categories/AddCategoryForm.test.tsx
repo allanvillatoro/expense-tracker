@@ -1,8 +1,16 @@
 import { render, screen } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { store } from "../app/store";
 import { AddCategoryForm } from "./AddCategoryForm";
 
 test("renders AddCategoryForm with form controls", () => {
-  render(<AddCategoryForm />);
+
+  render(
+    <Provider store={store}>
+      <AddCategoryForm />
+    </Provider>
+  );
+  
   //screen.debug();
   //form
   expect(screen.getByRole("form")).toBeInTheDocument();

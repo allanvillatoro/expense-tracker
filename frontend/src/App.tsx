@@ -41,6 +41,7 @@ function App() {
             </div>
           </nav>
         </header>
+        <div className="container">
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -48,6 +49,7 @@ function App() {
           <Route path="/expenses" element={<ExpensesPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
         </Routes>
+        </div>
       </BrowserRouter>
     </div>
   );

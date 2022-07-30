@@ -1,8 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
-import { CategoryPost, postCategory } from "./categoriesSlice";
+import { postCategory } from "./categoriesSlice";
 import swal from "sweetalert";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { CategoryPost } from "../interfaces/CategoryPost";
 
 interface CategoryForm {
   name: string;

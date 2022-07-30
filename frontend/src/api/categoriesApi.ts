@@ -1,5 +1,5 @@
-import { CategoryPost } from "../categories/categoriesSlice";
 import { Category } from "../interfaces/Category";
+import { CategoryPost } from "../interfaces/CategoryPost";
 import { apiConnection } from "./apiConnection";
 
 export const categoriesApi = {

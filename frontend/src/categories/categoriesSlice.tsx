@@ -2,13 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Category } from "../interfaces/Category";
 import { categoriesApi } from "../api/categoriesApi";
-
-export interface CategoryPost {
-  name: string;
-  budget: number;
-  alarmThreshold: number;
-  userId: string;
-}
+import { CategoryPost } from "../interfaces/CategoryPost";
 
 export interface CategoryState {
   categories: Category[];

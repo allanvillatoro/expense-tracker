@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { AddCategoryForm } from "./AddCategoryForm";
 import { categoriesListStub } from "./categoriesListStub";
 import { CategoriesTable } from "./CategoriesTable";
-import { addCategory, getCategoriesByUser } from "./categoriesSlice";
+import { getCategoriesByUser } from "./categoriesSlice";
 import { categoryStub } from "./categoryStub";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 
@@ -26,7 +26,7 @@ export const CategoriesPage = () => {
       <div style={{ alignSelf: "end" }}>
         <button
           type="button"
-          className="btn btn-success"
+          className="btn btn-danger"
           data-bs-toggle="modal"
           data-bs-target="#AddCategoryFormModal"
           style={{ width: 100 }}
