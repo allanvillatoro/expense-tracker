@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { store } from "../app/store";
 import { ExpensesPage } from "./ExpensesPage";
 
-test("renders ExpensesPage with button and table", () => {
+test("renders ExpensesPage with button and table", async () => {
   render(
     <Provider store={store}>
       <ExpensesPage />
@@ -18,4 +18,7 @@ test("renders ExpensesPage with button and table", () => {
   //add button
   expect(screen.getByRole("button")).toBeInTheDocument();
   expect(screen.getByText("Add")).toBeTruthy();
+
+  //Debe usarse data mockeada para que no afecte. Ademas deberia de estar loggeado
+  expect(await screen.findByRole("cell", { name: "lunch" })).toBeInTheDocument();
 });

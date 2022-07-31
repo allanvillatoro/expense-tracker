@@ -6,11 +6,11 @@ import { CategoriesPage } from "./categories/CategoriesPage";
 import { LoginPage } from "./users/LoginPage";
 import { RegisterPage } from "./users/RegisterPage";
 import { logout } from "./users/usersSlice";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "./hooks/hooks";
 import { clearExpenses } from "./expenses/expensesSlice";
 import { clearCategories } from "./categories/categoriesSlice";
 import { AboutPage } from "./about/AboutPage";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "./hooks/hooks";
 
 function App() {
   const dispatch = useDispatch();
