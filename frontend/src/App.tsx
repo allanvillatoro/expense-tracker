@@ -1,6 +1,6 @@
 import "./Styles.css";
 import { ExpensesPage } from "./expenses/ExpensesPage";
-import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
+import { Routes, Route, Link, BrowserRouter, Navigate } from "react-router-dom";
 import { MonthlyReportPage } from "./home/MonthlyReportPage";
 import { CategoriesPage } from "./categories/CategoriesPage";
 import { LoginPage } from "./users/LoginPage";
@@ -82,20 +82,40 @@ function App() {
             <Route
               path="/"
               element={
-                <>{isLoggedIn ? <MonthlyReportPage /> : <LoginPage />}</>
+                isLoggedIn ? (
+                  <MonthlyReportPage />
+                ) : (
+                  <Navigate replace to="/login" />
+                )
               }
             />
             <Route
               path="/expenses"
-              element={<>{isLoggedIn ? <ExpensesPage /> : <LoginPage />}</>}
+              element={
+                isLoggedIn ? <ExpensesPage /> : <Navigate replace to="/login" />
+              }
             />
             <Route
               path="/categories"
-              element={<>{isLoggedIn ? <CategoriesPage /> : <LoginPage />}</>}
+              element={
+                isLoggedIn ? (
+                  <CategoriesPage />
+                ) : (
+                  <Navigate replace to="/login" />
+                )
+              }
             />
             <Route
               path="/about"
-              element={<>{isLoggedIn ? <AboutPage /> : <LoginPage />}</>}
+              element={
+                isLoggedIn ? <AboutPage /> : <Navigate replace to="/login" />
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <h3 className="text-center">This page is not available</h3>
+              }
             />
           </Routes>
         </div>

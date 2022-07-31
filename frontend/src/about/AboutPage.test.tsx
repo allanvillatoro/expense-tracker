@@ -6,6 +6,6 @@ test("should render MonthlyReportPage", () => {
       <AboutPage />
   );
   //screen.debug();
-  expect(screen.getByText("About")).toBeTruthy();
+  expect(screen.getByText("About the author")).toBeInTheDocument();
   expect(screen.getByRole("img")).toBeInTheDocument();
 });
