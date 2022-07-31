@@ -15,11 +15,11 @@ export const CategoriesPage = () => {
     if (categoriesStatus === "idle") {
       dispatch(getCategoriesByUser(loggedUser._id));
     }
-  }, [categoriesStatus, dispatch]);
+  }, [categoriesStatus, dispatch, loggedUser._id]);
 
   return (
     <div className="col-12 col-lg-8 offset-lg-2 pageContainer">
-      <h2>Categories</h2>
+      <h3>Categories</h3>
       {/* Button trigger modal */}
       <div style={{ alignSelf: "end" }}>
         <button

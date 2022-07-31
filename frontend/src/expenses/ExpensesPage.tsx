@@ -21,11 +21,11 @@ export const ExpensesPage = () => {
     if (categoriesStatus === "idle") {
       dispatch(getCategoriesByUser(loggedUser._id));
     }
-  }, [expensesStatus, dispatch]);
+  }, [categoriesStatus,dispatch, expensesStatus,loggedUser._id]);
 
   return (
     <div className="col-12 col-lg-10 offset-lg-1 pageContainer">
-      <h2>Expenses</h2>
+      <h3>Expenses</h3>
       {/* Button trigger modal */}
       <div style={{ alignSelf: "end" }}>
         <button

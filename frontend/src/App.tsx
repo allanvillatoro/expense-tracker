@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "./hooks/hooks";
 import { clearExpenses } from "./expenses/expensesSlice";
 import { clearCategories } from "./categories/categoriesSlice";
+import { AboutPage } from "./about/AboutPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +57,9 @@ function App() {
                     <Link className="nav-link" to="/categories">
                       Categories
                     </Link>
+                    <Link className="nav-link" to="/about">
+                      About
+                    </Link>
                   </div>
                   <form className="d-flex" role="search">
                     <button
@@ -88,6 +92,10 @@ function App() {
             <Route
               path="/categories"
               element={<>{isLoggedIn ? <CategoriesPage /> : <LoginPage />}</>}
+            />
+            <Route
+              path="/about"
+              element={<>{isLoggedIn ? <AboutPage /> : <LoginPage />}</>}
             />
           </Routes>
         </div>

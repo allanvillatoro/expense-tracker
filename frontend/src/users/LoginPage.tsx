@@ -20,7 +20,7 @@ export const LoginPage = () => {
       dispatch(login(values)).then((response) => {
         if (response.type === "users/login/fulfilled") {
           //go to home
-          navigate("../", { replace: true })
+          navigate("../", { replace: true });
         }
       });
     },
@@ -29,8 +29,12 @@ export const LoginPage = () => {
   return (
     <div
       className="col-12 col-lg-4 offset-lg-4 pageContainer"
-      style={{ height: 400 }}
+      style={{
+        height: 500,
+        padding: 20,
+      }}
     >
+      <img className="loginImage" src="login.png" alt="login"/>
       <h2 className="text-center">Login</h2>
       <form aria-label="form" onSubmit={formik.handleSubmit}>
         <div className="form-group">
