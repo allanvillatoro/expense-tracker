@@ -2,7 +2,7 @@ export const AboutPage = () => {
   return (
     <div>
       <div className="aboutContainer">
-      <h3>About</h3>
+      <h3>About the author</h3>
         <img
           src="yo.jpg"
           alt="author"
