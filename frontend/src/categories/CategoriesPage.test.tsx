@@ -14,7 +14,7 @@ test("should render CategoriesPage", async () => {
   expect(screen.getByRole("table")).toBeInTheDocument();
   //Add button
   expect(screen.getByRole("button")).toBeInTheDocument();
-  expect(screen.getByText("Add")).toBeTruthy();
+  expect(screen.getByText("Add")).toBeInTheDocument();
 
   //it should contain a cell with value "gas" from the mock
   //Debe usarse data mockeada para que no afecte. Ademas deberia de estar loggeado

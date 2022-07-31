@@ -14,5 +14,5 @@ test("renders CategoryRow component with 3 cells", () => {
   //it contains 3 cells
   expect(screen.getAllByRole("cell").length).toBe(3);
   //it contains the word pizza
-  expect(screen.getByText("food")).toBeTruthy();
+  expect(screen.getByText("food")).toBeInTheDocument();
 });

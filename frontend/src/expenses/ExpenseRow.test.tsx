@@ -14,5 +14,5 @@ test("renders ExpenseRow component with 4 cells", () => {
   //it contains 4 cells
   expect(screen.getAllByRole("cell").length).toBe(4);
   //it contains the word pizza
-  expect(screen.getByText("Pizza")).toBeTruthy();
+  expect(screen.getByText("Pizza")).toBeInTheDocument();
 });

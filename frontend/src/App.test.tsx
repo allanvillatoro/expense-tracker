@@ -9,7 +9,7 @@ test('renders learn react link', () => {
       <App/>
     </Provider>
   );
-  screen.debug();
+  //screen.debug();
 
   //it will work only if it's logged in
   //expect(screen.getByRole("navigation")).toBeInTheDocument()

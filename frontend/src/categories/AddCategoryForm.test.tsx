@@ -19,5 +19,5 @@ test("renders AddCategoryForm with form controls", () => {
   //budget and alarmThreshold
   expect(screen.getAllByRole("spinbutton").length).toBe(2);
   //save button
-  expect(screen.getByRole("button")).toBeTruthy();
+  expect(screen.getByRole("button")).toBeInTheDocument();
 });
