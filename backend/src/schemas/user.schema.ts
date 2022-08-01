@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Transform } from 'class-transformer';
 import { Document, ObjectId } from 'mongoose';
 
@@ -16,7 +15,7 @@ export class User {
   @Prop()
   @Exclude()
   password: string;
-  
+
   @Prop({ required: true })
   fullName: string;
 }

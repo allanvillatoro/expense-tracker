@@ -5,7 +5,7 @@ import { ApiBadRequestResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { ValidationPipe } from '../pipes/validation.pipe';
 import { CategoryAlreadyExists } from '../exceptions/category-already-exists.exception';
 import ParamsWithUserId from '../utils/params-with-id';
-import { Category } from 'src/schemas/category.schema';
+import { Category } from '../schemas/category.schema';
 
 @ApiTags('Categories')
 @Controller('api/categories')

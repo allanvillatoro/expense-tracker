@@ -5,7 +5,7 @@ import { CategoryDoesntExist } from '../exceptions/category-doesnt-exist.excepti
 import { ValidationPipe } from '../pipes/validation.pipe';
 import { ExpenseDTO } from './dto/expense.dto';
 import { ExpensesService } from './expenses.service';
-import { Expense } from 'src/schemas/expense.schema';
+import { Expense } from '../schemas/expense.schema';
 
 @ApiTags('Expenses')
 @Controller('api/expenses')
