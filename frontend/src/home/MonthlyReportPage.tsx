@@ -13,6 +13,7 @@ import { Category } from "../interfaces/Category";
 import { useEffect, useState } from "react";
 import { getExpensesByUser } from "../expenses/expensesSlice";
 import { getCategoriesByUser } from "../categories/categoriesSlice";
+import { Expense } from "../interfaces/Expense";
 
 ChartJS.register(
   CategoryScale,
@@ -23,45 +24,41 @@ ChartJS.register(
   Legend
 );
 
+interface IDictionary {
+  [key: string]: Expense[];
+}
+
 export const MonthlyReportPage = () => {
   const isLoggedIn = useAppSelector((state) => state.users.isLoggedIn);
   const loggedUser = useAppSelector((state) => state.users.user);
   const categories = useAppSelector((state) => state.categories.categories);
+  const expenses = useAppSelector((state) => state.expenses.expenses);
   const expensesStatus = useAppSelector((state) => state.expenses.status);
   const categoriesStatus = useAppSelector((state) => state.categories.status);
   const dispatch = useAppDispatch();
 
-  const [selectedMonth, setSelectedMonth] = useState<String>();
-
-  useEffect(() => {
-    //const userId = "62e01522afcf618b284ee5d4";
-    if (expensesStatus === "idle") {
-      dispatch(getExpensesByUser(loggedUser._id));
-    }
-    if (categoriesStatus === "idle") {
-      dispatch(getCategoriesByUser(loggedUser._id));
-    }
-  }, [categoriesStatus, dispatch, expensesStatus, loggedUser._id]);
-
-  let labels = categories.map((category) => category.name);
+  const [selectedMonth, setSelectedMonth] = useState<string>();
 
   //update this
-  let months = ["january", "february", "march", "april"];
-  let totalExpenses = labels.map((value, index) => index + 50);
+  let months: string[] = [""];
 
-  let budgets = categories.map((category: Category, index) => category.budget);
+  let labels = categories.map((category) => category.name);
+  let totalExpensesForCategories = labels.map((value, index) => 0);
+  let budgetsForCategories = categories.map(
+    (category: Category, index) => category.budget
+  );
 
-  const data = {
+  const initialData = {
     labels,
     datasets: [
       {
         label: "Expenses",
-        data: totalExpenses,
+        data: totalExpensesForCategories,
         backgroundColor: "rgba(58, 162, 178, 0.5)",
       },
       {
         label: "Budget",
-        data: budgets,
+        data: budgetsForCategories,
         backgroundColor: "rgba(24, 38, 169, 0.5)",
       },
     ],
@@ -80,10 +77,118 @@ export const MonthlyReportPage = () => {
     },
   };
 
+  const generateMonthlyReports = () => {
+    console.log("generateMonthlyReports");
+    //sums up expenses by month
+    let sumExpensesByMonth: IDictionary = {};
+
+    //months label for the select (option)
+    months = [];
+
+    //sorting array without mutating
+    let sortedExpenses = [...expenses].sort((a, b) => {
+      var dateA = new Date(a.date).getTime();
+      var dateB = new Date(b.date).getTime();
+      return dateA < dateB ? 1 : -1; // ? -1 : 1 for ascending/increasing order
+    });
+
+    sortedExpenses.forEach((expense, index) => {
+      let date: Date = new Date(expense.date);
+      const monthString = date.toLocaleString("default", { month: "short" });
+      const year = date.getFullYear();
+      const monthYear = `${year} - ${monthString}`;
+
+      //Add a new label to the months array if doesn't exist yet
+      if (months.findIndex((month) => month === monthYear) < 0)
+        months = [...months, monthYear];
+
+      //it creates the key/value pair for the expenses total if it doesn't exist yet
+      if (!sumExpensesByMonth[monthYear]) {
+        sumExpensesByMonth[monthYear] = [];
+      }
+      //adds to the accumulator
+      sumExpensesByMonth[monthYear] = [
+        ...sumExpensesByMonth[monthYear],
+        expense,
+      ];
+    });
+
+    let categoriesByMonth: string[] = [];
+    //loading data to the chart
+    if (selectedMonth) {
+      sumExpensesByMonth[selectedMonth].forEach((currentExpense, index) => {
+        if (
+          categoriesByMonth.findIndex(
+            (category) => category === currentExpense.categoryName
+          ) < 0
+        )
+          categoriesByMonth = [
+            ...categoriesByMonth,
+            currentExpense.categoryName,
+          ];
+      });
+      
+      let sumByCategory: number[] = [];
+      let budgetByCategory: number[] = [];
+
+      //these are the unique categories
+      categoriesByMonth.forEach((currentCategory) => {
+        //retrieve expenses from the same category
+        let sameCategoryExpensesArray: Expense[] = sumExpensesByMonth[
+          selectedMonth
+        ].filter((current, index) => current.categoryName === currentCategory);
+
+        //it accumulates all the expenses amount of the same category
+        const totalExpensesForCurrentCategory =
+          sameCategoryExpensesArray.reduce(
+            (previousExpense: number, currentExpense: Expense) =>
+              previousExpense + currentExpense.amount,
+            0
+          );
+
+        //gets the budget for the category
+        const categoryFound = categories.find(
+          (current: Category) => current.name === currentCategory
+        );
+        if (categoryFound) {
+          budgetByCategory.push(categoryFound.budget);
+        } else {
+          budgetByCategory.push(0);
+        }
+        sumByCategory.push(totalExpensesForCurrentCategory);
+      });
+
+      //
+      console.log("Monthly Report");
+      console.log(categoriesByMonth);
+      console.log(sumByCategory);
+      console.log(budgetByCategory);
+
+      labels = [...categoriesByMonth];
+      totalExpensesForCategories = [...sumByCategory];
+      budgetsForCategories = [...budgetByCategory];
+    }
+  };
+
+  useEffect(() => {
+    console.log("useEffect");
+    //const userId = "62e01522afcf618b284ee5d4";
+    if (categoriesStatus === "idle") {
+      dispatch(getCategoriesByUser(loggedUser._id));
+    }
+    if (expensesStatus === "idle") {
+      dispatch(getExpensesByUser(loggedUser._id));
+    }
+  }, [categoriesStatus, dispatch, expensesStatus, loggedUser._id]);
+
   const selectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     setSelectedMonth(value);
   };
+
+  if (expensesStatus === "succeeded" && categoriesStatus == "succeeded") {
+    generateMonthlyReports();
+  }
 
   return (
     <div className="pageContainer">
@@ -92,7 +197,7 @@ export const MonthlyReportPage = () => {
         <h3 className="text-center">Welcome, {loggedUser?.fullName} </h3>
       )}
       <div className="col-12 col-lg-8 offset-lg-2 chartContainer">
-        <div style={{alignSelf: 'end'}}>
+        <div style={{ alignSelf: "end" }}>
           <label htmlFor="selectMonth">Month:&nbsp;</label>
           <select
             id="selectMonth"
@@ -104,13 +209,13 @@ export const MonthlyReportPage = () => {
               Select a month
             </option>
             {months.map((month) => (
-              <option key={month} value={month}>
+              <option key={month.toString()} value={month.toString()}>
                 {month}
               </option>
             ))}
           </select>
         </div>
-        <Bar options={options} data={data} />
+        <Bar options={options} data={initialData} />
       </div>
     </div>
   );
