@@ -63,7 +63,7 @@ export const ExpensesPage = () => {
             </div>
             <div className="modal-body">
               <AddExpenseForm
-                categories={categories.map((category) => category.name)}
+                categoriesList={categories.map((category) => category.name)}
               />
             </div>
           </div>

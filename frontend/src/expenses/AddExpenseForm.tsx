@@ -6,6 +6,7 @@ import { ExpensePost } from "../interfaces/ExpensePost";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { postExpense } from "./expensesSlice";
 import swal from "sweetalert";
+import { Expense } from "../interfaces/Expense";
 
 interface ExpenseForm {
   description: string;
@@ -22,17 +23,58 @@ const initialValues: ExpenseForm = {
 };
 
 interface AddExpenseFormProps {
-  categories: string[];
+  categoriesList: string[];
 }
 
-export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
+export const AddExpenseForm = ({ categoriesList }: AddExpenseFormProps) => {
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
   const loggedUser = useAppSelector((state) => state.users.user);
+  const expenses = useAppSelector((state) => state.expenses.expenses);
+  const categories = useAppSelector((state) => state.categories.categories);
   const dispatch = useAppDispatch();
   const errorOnCreating = useAppSelector(
     (state) => state.expenses.errorOnCreating
   );
+
+  const triggerAlarms = (newExpense: ExpensePost) => {
+    const today = new Date();
+    const newExpenseDate = new Date(newExpense.date);
+    if (
+      newExpenseDate.getMonth() === today.getMonth() &&
+      newExpenseDate.getFullYear() === today.getFullYear()
+    ) {
+      //filtered by month and category
+      const filteredExpensesByMonthCategory = expenses.filter(
+        (currentExpense) => {
+          const currentDate = new Date(currentExpense.date);
+          return (
+            currentDate.getMonth() === today.getMonth() &&
+            currentDate.getFullYear() &&
+            today.getFullYear() &&
+            currentExpense.categoryName === newExpense.categoryName
+          );
+        }
+      );
+      const sumExpensesCurrentMonthCategory =
+        filteredExpensesByMonthCategory.reduce(
+          (previous: number, current: Expense) => previous + current.amount,
+          newExpense.amount
+        );
+      const foundCategory = categories.find(
+        (current) => current.name === newExpense.categoryName
+      );
+      if (foundCategory) {
+        if (
+          sumExpensesCurrentMonthCategory >=
+          foundCategory.budget * (foundCategory.alarmThreshold / 100)
+        ) {
+          swal("Saved, but you are spending too much on " + foundCategory.name);
+        }
+      }
+    }
+  };
+
   const formik = useFormik({
     initialValues,
     onSubmit: (values, { resetForm }) => {
@@ -43,6 +85,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
       dispatch(postExpense(newExpense)).then((response) => {
         if (response.type === "expenses/postExpense/fulfilled") {
           swal("Expense saved successfully");
+          triggerAlarms(newExpense);
           resetForm();
         }
       });
@@ -73,7 +116,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
           <option value="" disabled>
             Select a category
           </option>
-          {categories.map((category) => (
+          {categoriesList.map((category) => (
             <option key={category} value={category}>
               {category}
             </option>
@@ -81,7 +124,7 @@ export const AddExpenseForm = ({ categories }: AddExpenseFormProps) => {
         </select>
       </div>
       <div className="form-group">
-        <label htmlFor="amount">Amount</label>
+        <label htmlFor="amount">Amount ($)</label>
         <input
           type="number"
           className="form-control"

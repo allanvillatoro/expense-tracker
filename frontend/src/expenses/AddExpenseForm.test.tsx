@@ -9,7 +9,7 @@ test("renders AddExpenseForm with form controls", () => {
   render(
     <Provider store={store}>
       <AddExpenseForm
-        categories={categoriesListStub.map((category) => category.name)}
+        categoriesList={categoriesListStub.map((category) => category.name)}
       />
     </Provider>
   );

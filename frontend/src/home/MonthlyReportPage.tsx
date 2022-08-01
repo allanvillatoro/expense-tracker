@@ -14,7 +14,6 @@ import { useEffect, useRef, useState } from "react";
 import { getExpensesByUser } from "../expenses/expensesSlice";
 import { getCategoriesByUser } from "../categories/categoriesSlice";
 import { Expense } from "../interfaces/Expense";
-import { current } from "@reduxjs/toolkit";
 
 ChartJS.register(
   CategoryScale,
@@ -185,14 +184,14 @@ export const MonthlyReportPage = () => {
             currentDate.getFullYear()
           ) {
             if (
-              totalExpensesForCurrentCategory >
+              totalExpensesForCurrentCategory >=
               categoryFound.budget * (categoryFound.alarmThreshold / 100)
             ) {
               alerts.push("You are spending so much on " + currentCategory);
             }
           }
           //for other months
-          else if (totalExpensesForCurrentCategory > categoryFound.budget) {
+          else if (totalExpensesForCurrentCategory >= categoryFound.budget) {
             alerts.push("You spent too much on " + currentCategory);
           }
         } else {
@@ -248,7 +247,7 @@ export const MonthlyReportPage = () => {
     <div className="pageContainer">
       <br />
       {isLoggedIn && (
-        <h3 className="text-center">Welcome, {loggedUser?.fullName} </h3>
+        <h3 className="text-center" style={{paddingBottom: 20}}>Welcome, {loggedUser?.fullName} </h3>
       )}
       <div className="col-12 col-lg-8 offset-lg-2 chartContainer">
         <div style={{ alignSelf: "end" }}>

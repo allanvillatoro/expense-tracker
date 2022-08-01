@@ -52,7 +52,7 @@ export const AddCategoryForm = () => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="budget">Budget</label>
+        <label htmlFor="budget">Budget ($)</label>
         <input
           type="number"
           className="form-control"

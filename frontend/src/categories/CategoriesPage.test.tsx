@@ -36,12 +36,12 @@ test("should render CategoriesPage", async () => {
 
 test("it should retrieve the categories list", async () => {
   //screen.debug();
-  expect(await axios.get("/api/categories/62e01522afcf618b284ee5d4")).toEqual({
+  expect(await axios.get("/api/categories/fakeId")).toEqual({
     data: categoriesListStub,
   });
   expect(
     await (
-      await axios.get("/api/categories/62e01522afcf618b284ee5d4")
+      await axios.get("/api/categories/fakeId")
     ).data
   ).toHaveLength(categoriesListStub.length);
 });

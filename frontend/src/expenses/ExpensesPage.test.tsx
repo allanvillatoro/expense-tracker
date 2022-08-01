@@ -37,12 +37,12 @@ test("renders ExpensesPage with button and table", async () => {
 
 test("it should retrieve the expenses list", async () => {
   //screen.debug();
-  expect(await axios.get("/api/expenses/62e01522afcf618b284ee5d4")).toEqual({
+  expect(await axios.get("/api/expenses/fakeId")).toEqual({
     data: expensesListStub,
   });
   expect(
     await (
-      await axios.get("/api/expenses/62e01522afcf618b284ee5d4")
+      await axios.get("/api/expenses/fakeId")
     ).data
   ).toHaveLength(expensesListStub.length);
 });
