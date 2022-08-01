@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { Category } from "../interfaces/Category";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getExpensesByUser } from "../expenses/expensesSlice";
 import { getCategoriesByUser } from "../categories/categoriesSlice";
 import { Expense } from "../interfaces/Expense";
@@ -37,18 +37,21 @@ export const MonthlyReportPage = () => {
   const categoriesStatus = useAppSelector((state) => state.categories.status);
   const dispatch = useAppDispatch();
 
-  const [selectedMonth, setSelectedMonth] = useState<string>();
-
+  //const [selectedMonth, setSelectedMonth] = useState<string>();
+  const selectedMonth = useRef("")
+  const [sumExpensesByMonth, setSumExpensesByMonth] = useState<IDictionary>({})
+  
   //update this
-  let months: string[] = [""];
-
+  //let months: string[] = [""];
+  const [months, setMonths] = useState<string[]>([""])
+  
   let labels = categories.map((category) => category.name);
   let totalExpensesForCategories = labels.map((value, index) => 0);
   let budgetsForCategories = categories.map(
     (category: Category, index) => category.budget
   );
 
-  const initialData = {
+  const data = {
     labels,
     datasets: [
       {
@@ -77,13 +80,13 @@ export const MonthlyReportPage = () => {
     },
   };
 
-  const generateMonthlyReports = () => {
-    console.log("generateMonthlyReports");
+  const generateMonthsList = () => {
+    console.log("generateMonthsList");
     //sums up expenses by month
-    let sumExpensesByMonth: IDictionary = {};
+    let tempSumExpensesByMonth: IDictionary = {};
 
     //months label for the select (option)
-    months = [];
+    let tempMonths: string[] = [];
 
     //sorting array without mutating
     let sortedExpenses = [...expenses].sort((a, b) => {
@@ -99,24 +102,38 @@ export const MonthlyReportPage = () => {
       const monthYear = `${year} - ${monthString}`;
 
       //Add a new label to the months array if doesn't exist yet
-      if (months.findIndex((month) => month === monthYear) < 0)
-        months = [...months, monthYear];
+      if (tempMonths.findIndex((month) => month === monthYear) < 0)
+        tempMonths = [...tempMonths, monthYear];
 
       //it creates the key/value pair for the expenses total if it doesn't exist yet
-      if (!sumExpensesByMonth[monthYear]) {
-        sumExpensesByMonth[monthYear] = [];
+      if (!tempSumExpensesByMonth[monthYear]) {
+        tempSumExpensesByMonth[monthYear] = [];
       }
       //adds to the accumulator
-      sumExpensesByMonth[monthYear] = [
-        ...sumExpensesByMonth[monthYear],
+      tempSumExpensesByMonth[monthYear] = [
+        ...tempSumExpensesByMonth[monthYear],
         expense,
       ];
     });
+    setMonths(tempMonths);
+    console.log("setSumExpensesByMonth");
+    console.log(tempSumExpensesByMonth);
+    setSumExpensesByMonth(tempSumExpensesByMonth);
+  }
 
+  const generateMonthlyReports = () => {
+    console.log('generateMonthlyReports');
     let categoriesByMonth: string[] = [];
     //loading data to the chart
-    if (selectedMonth) {
-      sumExpensesByMonth[selectedMonth].forEach((currentExpense, index) => {
+    console.log('selectedMonth');
+    console.log(selectedMonth);
+
+    console.log('sumExpensesByMonth');
+    console.log(sumExpensesByMonth);
+
+    if (selectedMonth.current !== "") {
+      console.log(sumExpensesByMonth[selectedMonth.current]);
+      sumExpensesByMonth[selectedMonth.current].forEach((currentExpense, index) => {
         if (
           categoriesByMonth.findIndex(
             (category) => category === currentExpense.categoryName
@@ -127,7 +144,8 @@ export const MonthlyReportPage = () => {
             currentExpense.categoryName,
           ];
       });
-      
+
+      console.log(categoriesByMonth);
       let sumByCategory: number[] = [];
       let budgetByCategory: number[] = [];
 
@@ -135,7 +153,7 @@ export const MonthlyReportPage = () => {
       categoriesByMonth.forEach((currentCategory) => {
         //retrieve expenses from the same category
         let sameCategoryExpensesArray: Expense[] = sumExpensesByMonth[
-          selectedMonth
+          selectedMonth.current
         ].filter((current, index) => current.categoryName === currentCategory);
 
         //it accumulates all the expenses amount of the same category
@@ -155,11 +173,15 @@ export const MonthlyReportPage = () => {
         } else {
           budgetByCategory.push(0);
         }
+
+        console.log(sameCategoryExpensesArray);
+        console.log(totalExpensesForCurrentCategory);
+
         sumByCategory.push(totalExpensesForCurrentCategory);
       });
 
       //
-      console.log("Monthly Report");
+      console.log("total");
       console.log(categoriesByMonth);
       console.log(sumByCategory);
       console.log(budgetByCategory);
@@ -171,7 +193,7 @@ export const MonthlyReportPage = () => {
   };
 
   useEffect(() => {
-    console.log("useEffect");
+    console.log('useEffect');
     //const userId = "62e01522afcf618b284ee5d4";
     if (categoriesStatus === "idle") {
       dispatch(getCategoriesByUser(loggedUser._id));
@@ -179,16 +201,18 @@ export const MonthlyReportPage = () => {
     if (expensesStatus === "idle") {
       dispatch(getExpensesByUser(loggedUser._id));
     }
+    if (expensesStatus === "succeeded" && categoriesStatus == "succeeded") {
+      generateMonthsList();
+    }
+
   }, [categoriesStatus, dispatch, expensesStatus, loggedUser._id]);
 
   const selectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    setSelectedMonth(value);
-  };
-
-  if (expensesStatus === "succeeded" && categoriesStatus == "succeeded") {
+    //setSelectedMonth(value);
+    selectedMonth.current = value;
     generateMonthlyReports();
-  }
+  };
 
   return (
     <div className="pageContainer">
@@ -215,7 +239,7 @@ export const MonthlyReportPage = () => {
             ))}
           </select>
         </div>
-        <Bar options={options} data={initialData} />
+        <Bar options={options} data={data} />
       </div>
     </div>
   );
