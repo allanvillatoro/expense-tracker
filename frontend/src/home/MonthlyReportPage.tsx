@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { getExpensesByUser } from "../expenses/expensesSlice";
 import { getCategoriesByUser } from "../categories/categoriesSlice";
 import { Expense } from "../interfaces/Expense";
+import { current } from "@reduxjs/toolkit";
 
 ChartJS.register(
   CategoryScale,
@@ -51,6 +52,8 @@ export const MonthlyReportPage = () => {
   const [budgetsForCategories, setBudgetsForCategories] = useState(
     tempBudgetsForCategories
   );
+
+  const [alarms, setAlarms] = useState<string[]>([]);
 
   const [chartData, setChartData] = useState({
     labels,
@@ -146,6 +149,11 @@ export const MonthlyReportPage = () => {
 
       let sumByCategory: number[] = [];
       let budgetByCategory: number[] = [];
+      let alerts: string[] = [];
+
+      //calculating current month
+      const selectedDate = new Date(selectedMonth.current.replace(" - ", ", "));
+      const currentDate = new Date();
 
       //these are the unique categories
       categoriesByMonth.forEach((currentCategory) => {
@@ -166,8 +174,27 @@ export const MonthlyReportPage = () => {
         const categoryFound = categories.find(
           (current: Category) => current.name === currentCategory
         );
+
         if (categoryFound) {
           budgetByCategory.push(categoryFound.budget);
+
+          //for current month
+          if (
+            selectedDate.getMonth() === currentDate.getMonth() &&
+            selectedDate.getFullYear() &&
+            currentDate.getFullYear()
+          ) {
+            if (
+              totalExpensesForCurrentCategory >
+              categoryFound.budget * (categoryFound.alarmThreshold / 100)
+            ) {
+              alerts.push("You are spending so much on " + currentCategory);
+            }
+          }
+          //for other months
+          else if (totalExpensesForCurrentCategory > categoryFound.budget) {
+            alerts.push("You spent too much on " + currentCategory);
+          }
         } else {
           budgetByCategory.push(0);
         }
@@ -176,6 +203,7 @@ export const MonthlyReportPage = () => {
       setLabels([...categoriesByMonth]);
       setTotalExpensesForCategories([...sumByCategory]);
       setBudgetsForCategories([...budgetByCategory]);
+      setAlarms(alerts);
     }
   };
 
@@ -242,6 +270,14 @@ export const MonthlyReportPage = () => {
           </select>
         </div>
         <Bar options={options} data={chartData} />
+        <div className="text-center">
+          {alarms.length > 0 &&
+            alarms.map((alert) => (
+              <div key={alert}>
+                <span>{alert}</span>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
