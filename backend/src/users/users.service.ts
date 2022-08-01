@@ -10,6 +10,8 @@ import { User } from '../schemas/user.schema';
 import { UserDTO } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDTO } from './dto/login-user.dto';
+import { LoggedInUserDTO } from './dto/logged-in-user.dto';
+import { CreatedUserDTO } from './dto/created-user.dto copy';
 
 @Injectable()
 export class UsersService {
@@ -31,8 +33,14 @@ export class UsersService {
     };
 
     await new this.userModel(userPasswordHash).save();
-    delete userPasswordHash.password;
-    return userPasswordHash;
+    //delete userPasswordHash.password;
+
+    const createdUser : CreatedUserDTO = {
+      email: user.email,
+      fullName: user.fullName
+    }
+
+    return createdUser;
   }
 
   async login(loginUserDTO: LoginUserDTO) {
@@ -45,7 +53,11 @@ export class UsersService {
 
     if (!bcrypt.compareSync(password, user.password))
       throw new UnauthorizedException('Credentials are not valid (password)');
-    
-    return {_id: user._id, email: user.email, fullName: user.fullName};
+    const loggedInUser : LoggedInUserDTO = {
+      _id: user._id,
+      email: user.email,
+      fullName: user.fullName
+    }
+    return loggedInUser;
   }
 }

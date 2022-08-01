@@ -3,7 +3,8 @@ import { CategoriesPage } from "./CategoriesPage";
 import { store } from "../app/store";
 import { Provider } from "react-redux";
 import axios from "axios";
-import { categoriesListStub } from "./categoriesListStub";
+import { categoriesListStub } from './categoriesListStub';
+import { BASE_URL } from "../api/apiConnection";
 
 beforeEach(() => {
   const mockGet = jest.spyOn(axios, "get");
@@ -36,12 +37,11 @@ test("should render CategoriesPage", async () => {
 
 test("it should retrieve the categories list", async () => {
   //screen.debug();
-  expect(await axios.get("/api/categories/fakeId")).toEqual({
+  expect(await axios.get(`${BASE_URL}/api/categories/fakeId`)).toEqual({
     data: categoriesListStub,
   });
-  expect(
-    await (
-      await axios.get("/api/categories/fakeId")
-    ).data
-  ).toHaveLength(categoriesListStub.length);
+
+  expect(await (await axios.get(`${BASE_URL}/api/categories/fakeId`)).data).toHaveLength(
+    categoriesListStub.length
+  );
 });

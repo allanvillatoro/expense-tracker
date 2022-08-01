@@ -29,7 +29,7 @@ export class CategoriesService {
     if (existingCategory) throw new CategoryAlreadyExists();
 
     const createdCategory = await new this.categoryModel(category).save();
-    return createdCategory as CategoryDTO;
+    return createdCategory;
   }
 
   async getCategoriesByUser(userId: string) {
@@ -37,6 +37,6 @@ export class CategoriesService {
       .find({ userId })
       .sort({ name: 1 })
       .exec();
-    return categories as Array<CategoryDTO>;
+    return categories;
   }
 }
