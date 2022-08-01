@@ -44,14 +44,17 @@ export const MonthlyReportPage = () => {
   //update this
   //let months: string[] = [""];
   const [months, setMonths] = useState<string[]>([""])
-  
-  let labels = categories.map((category) => category.name);
-  let totalExpensesForCategories = labels.map((value, index) => 0);
-  let budgetsForCategories = categories.map(
+
+  let tempLabels = categories.map((category) => category.name);
+  let tempTotalExpensesForCategories = tempLabels.map((value, index) => 0);
+  let tempBudgetsForCategories = categories.map(
     (category: Category, index) => category.budget
   );
+  const [labels, setLabels] = useState(tempLabels)
+  const [totalExpensesForCategories, setTotalExpensesForCategories] = useState(tempTotalExpensesForCategories)
+  const [budgetsForCategories, setBudgetsForCategories] = useState(tempBudgetsForCategories)
 
-  const data = {
+  const [chartData, setChartData] = useState({
     labels,
     datasets: [
       {
@@ -65,7 +68,7 @@ export const MonthlyReportPage = () => {
         backgroundColor: "rgba(24, 38, 169, 0.5)",
       },
     ],
-  };
+  })
 
   const options = {
     responsive: true,
@@ -186,12 +189,30 @@ export const MonthlyReportPage = () => {
       console.log(sumByCategory);
       console.log(budgetByCategory);
 
-      labels = [...categoriesByMonth];
-      totalExpensesForCategories = [...sumByCategory];
-      budgetsForCategories = [...budgetByCategory];
+      setLabels([...categoriesByMonth]);
+      setTotalExpensesForCategories([...sumByCategory]);
+      setBudgetsForCategories([...budgetByCategory]);
     }
   };
 
+  useEffect(() => {
+    setChartData({
+      labels,
+      datasets: [
+        {
+          label: "Expenses",
+          data: totalExpensesForCategories,
+          backgroundColor: "rgba(58, 162, 178, 0.5)",
+        },
+        {
+          label: "Budget",
+          data: budgetsForCategories,
+          backgroundColor: "rgba(24, 38, 169, 0.5)",
+        },
+      ],
+    })
+  }, [labels,totalExpensesForCategories,budgetsForCategories])
+  
   useEffect(() => {
     console.log('useEffect');
     //const userId = "62e01522afcf618b284ee5d4";
@@ -201,7 +222,7 @@ export const MonthlyReportPage = () => {
     if (expensesStatus === "idle") {
       dispatch(getExpensesByUser(loggedUser._id));
     }
-    if (expensesStatus === "succeeded" && categoriesStatus == "succeeded") {
+    if (expensesStatus === "succeeded" && categoriesStatus === "succeeded") {
       generateMonthsList();
     }
 
@@ -239,7 +260,7 @@ export const MonthlyReportPage = () => {
             ))}
           </select>
         </div>
-        <Bar options={options} data={data} />
+        <Bar options={options} data={chartData} />
       </div>
     </div>
   );
