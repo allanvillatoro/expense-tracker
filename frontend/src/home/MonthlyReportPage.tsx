@@ -37,22 +37,20 @@ export const MonthlyReportPage = () => {
   const categoriesStatus = useAppSelector((state) => state.categories.status);
   const dispatch = useAppDispatch();
 
-  //const [selectedMonth, setSelectedMonth] = useState<string>();
-  const selectedMonth = useRef("")
-  const [sumExpensesByMonth, setSumExpensesByMonth] = useState<IDictionary>({})
-  
-  //update this
-  //let months: string[] = [""];
-  const [months, setMonths] = useState<string[]>([""])
+  const selectedMonth = useRef("");
+  const [sumExpensesByMonth, setSumExpensesByMonth] = useState<IDictionary>({});
+  const [months, setMonths] = useState<string[]>([""]);
 
-  let tempLabels = categories.map((category) => category.name);
+  let tempLabels = ["food"];
   let tempTotalExpensesForCategories = tempLabels.map((value, index) => 0);
-  let tempBudgetsForCategories = categories.map(
-    (category: Category, index) => category.budget
+  let tempBudgetsForCategories = [0];
+  const [labels, setLabels] = useState(tempLabels);
+  const [totalExpensesForCategories, setTotalExpensesForCategories] = useState(
+    tempTotalExpensesForCategories
   );
-  const [labels, setLabels] = useState(tempLabels)
-  const [totalExpensesForCategories, setTotalExpensesForCategories] = useState(tempTotalExpensesForCategories)
-  const [budgetsForCategories, setBudgetsForCategories] = useState(tempBudgetsForCategories)
+  const [budgetsForCategories, setBudgetsForCategories] = useState(
+    tempBudgetsForCategories
+  );
 
   const [chartData, setChartData] = useState({
     labels,
@@ -68,7 +66,7 @@ export const MonthlyReportPage = () => {
         backgroundColor: "rgba(24, 38, 169, 0.5)",
       },
     ],
-  })
+  });
 
   const options = {
     responsive: true,
@@ -84,7 +82,6 @@ export const MonthlyReportPage = () => {
   };
 
   const generateMonthsList = () => {
-    console.log("generateMonthsList");
     //sums up expenses by month
     let tempSumExpensesByMonth: IDictionary = {};
 
@@ -119,36 +116,34 @@ export const MonthlyReportPage = () => {
       ];
     });
     setMonths(tempMonths);
-    console.log("setSumExpensesByMonth");
-    console.log(tempSumExpensesByMonth);
     setSumExpensesByMonth(tempSumExpensesByMonth);
-  }
+
+    let tempLabels = categories.map((category) => category.name);
+    let tempBudgetsForCategories = categories.map(
+      (category: Category, index) => category.budget
+    );
+    setLabels(tempLabels);
+    setBudgetsForCategories(tempBudgetsForCategories);
+  };
 
   const generateMonthlyReports = () => {
-    console.log('generateMonthlyReports');
     let categoriesByMonth: string[] = [];
     //loading data to the chart
-    console.log('selectedMonth');
-    console.log(selectedMonth);
-
-    console.log('sumExpensesByMonth');
-    console.log(sumExpensesByMonth);
-
     if (selectedMonth.current !== "") {
-      console.log(sumExpensesByMonth[selectedMonth.current]);
-      sumExpensesByMonth[selectedMonth.current].forEach((currentExpense, index) => {
-        if (
-          categoriesByMonth.findIndex(
-            (category) => category === currentExpense.categoryName
-          ) < 0
-        )
-          categoriesByMonth = [
-            ...categoriesByMonth,
-            currentExpense.categoryName,
-          ];
-      });
+      sumExpensesByMonth[selectedMonth.current].forEach(
+        (currentExpense, index) => {
+          if (
+            categoriesByMonth.findIndex(
+              (category) => category === currentExpense.categoryName
+            ) < 0
+          )
+            categoriesByMonth = [
+              ...categoriesByMonth,
+              currentExpense.categoryName,
+            ];
+        }
+      );
 
-      console.log(categoriesByMonth);
       let sumByCategory: number[] = [];
       let budgetByCategory: number[] = [];
 
@@ -176,19 +171,8 @@ export const MonthlyReportPage = () => {
         } else {
           budgetByCategory.push(0);
         }
-
-        console.log(sameCategoryExpensesArray);
-        console.log(totalExpensesForCurrentCategory);
-
         sumByCategory.push(totalExpensesForCurrentCategory);
       });
-
-      //
-      console.log("total");
-      console.log(categoriesByMonth);
-      console.log(sumByCategory);
-      console.log(budgetByCategory);
-
       setLabels([...categoriesByMonth]);
       setTotalExpensesForCategories([...sumByCategory]);
       setBudgetsForCategories([...budgetByCategory]);
@@ -210,11 +194,10 @@ export const MonthlyReportPage = () => {
           backgroundColor: "rgba(24, 38, 169, 0.5)",
         },
       ],
-    })
-  }, [labels,totalExpensesForCategories,budgetsForCategories])
-  
+    });
+  }, [labels, totalExpensesForCategories, budgetsForCategories]);
+
   useEffect(() => {
-    console.log('useEffect');
     //const userId = "62e01522afcf618b284ee5d4";
     if (categoriesStatus === "idle") {
       dispatch(getCategoriesByUser(loggedUser._id));
@@ -225,12 +208,10 @@ export const MonthlyReportPage = () => {
     if (expensesStatus === "succeeded" && categoriesStatus === "succeeded") {
       generateMonthsList();
     }
-
   }, [categoriesStatus, dispatch, expensesStatus, loggedUser._id]);
 
   const selectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    //setSelectedMonth(value);
     selectedMonth.current = value;
     generateMonthlyReports();
   };
