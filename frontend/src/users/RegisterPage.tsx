@@ -82,7 +82,7 @@ export const RegisterPage = () => {
   return (
     <div
       className="col-12 col-lg-4 offset-lg-4 pageContainer"
-      style={{ height: 500 }}
+      style={{ height: 550, padding: 20 }}
     >
       <h2 className="text-center">Create account</h2>
       <form aria-label="form" onSubmit={formik.handleSubmit}>

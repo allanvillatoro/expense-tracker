@@ -6,9 +6,9 @@
 }
 
 .loginImage {
-  width:150px;
-  height:150px;
-  align-self:center;
+  width: 150px;
+  height: 150px;
+  align-self: center;
 }
 
 .aboutContainer {
@@ -17,4 +17,11 @@
   height: 400px;
   justify-content: center;
   align-items: center;
+}
+
+.chartContainer {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

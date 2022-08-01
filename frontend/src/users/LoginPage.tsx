@@ -30,8 +30,8 @@ export const LoginPage = () => {
     <div
       className="col-12 col-lg-4 offset-lg-4 pageContainer"
       style={{
-        height: 500,
-        padding: 20,
+        height:550,
+        padding: 20
       }}
     >
       <img className="loginImage" src="login.png" alt="login"/>
