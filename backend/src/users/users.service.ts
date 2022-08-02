@@ -11,7 +11,7 @@ import { UserDTO } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDTO } from './dto/login-user.dto';
 import { LoggedInUserDTO } from './dto/logged-in-user.dto';
-import { CreatedUserDTO } from './dto/created-user.dto copy';
+import { CreatedUserDTO } from './dto/created-user.dto';
 
 @Injectable()
 export class UsersService {

@@ -1,11 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EmailAlreadyExists } from '../exceptions/email-already-exists.exception';
 import { ValidationPipe } from '../pipes/validation.pipe';
 import { UserDTO } from './dto/user.dto';
 import { UsersService } from './users.service';
 import { LoginUserDTO } from './dto/login-user.dto';
-import { CreatedUserDTO } from './dto/created-user.dto copy';
+import { CreatedUserDTO } from './dto/created-user.dto';
 import { LoggedInUserDTO } from './dto/logged-in-user.dto';
 
 @ApiTags('Users')
@@ -14,6 +14,10 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('register')
+  @ApiOperation({
+    summary: "Register a new user",
+    description: "Register a new user"
+  })
   @ApiResponse({status:201, description: 'User was created', type: CreatedUserDTO })
   @ApiResponse({status:400, description: 'Bad request'})
   @ApiBadRequestResponse({ description: new EmailAlreadyExists().message })
@@ -22,6 +26,10 @@ export class UsersController {
   }
 
   @Post('login')
+  @ApiOperation({
+    summary: "Login user",
+    description: "Login user"
+  })
   @ApiResponse({status:201, description: 'User exists', type: LoggedInUserDTO })
   @ApiResponse({status:400, description: 'Bad request'})
   @ApiResponse({status:401, description: 'Unauthorized'})
