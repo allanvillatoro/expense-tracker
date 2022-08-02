@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { ExpenseRow } from "./ExpenseRow";
 import { expenseStub } from "./expenseStub";
 
-test("renders ExpenseRow component with 4 cells", () => {
+test("should render ExpenseRow component with 4 cells", () => {
   render(
     <table>
       <tbody>

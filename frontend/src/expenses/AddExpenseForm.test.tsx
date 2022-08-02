@@ -3,9 +3,8 @@ import { AddExpenseForm } from "./AddExpenseForm";
 import { categoriesListStub } from "../categories/categoriesListStub";
 import { Provider } from "react-redux";
 import { store } from "../app/store";
-import userEvent from "@testing-library/user-event";
 
-test("renders AddExpenseForm with form controls", () => {
+test("should render AddExpenseForm with form controls", () => {
   render(
     <Provider store={store}>
       <AddExpenseForm

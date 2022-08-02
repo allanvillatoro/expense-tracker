@@ -35,7 +35,7 @@ test("should render CategoriesPage", async () => {
   //expect(await screen.findByRole("cell", { name: "food" })).toBeInTheDocument();
 });
 
-test("it should retrieve the categories list", async () => {
+test("should retrieve the categories list", async () => {
   //screen.debug();
   expect(await axios.get(`${BASE_URL}/api/categories/fakeId`)).toEqual({
     data: categoriesListStub,

@@ -18,7 +18,7 @@ beforeEach(() => {
   );
 });
 
-test("renders ExpensesPage with button and table", async () => {
+test("should render ExpensesPage with button and table", async () => {
   //screen.debug();
   //table
   expect(screen.getByRole("table")).toBeInTheDocument();
@@ -35,7 +35,7 @@ test("renders ExpensesPage with button and table", async () => {
   ).toBeInTheDocument();*/
 });
 
-test("it should retrieve the expenses list", async () => {
+test("should retrieve the expenses list", async () => {
   //screen.debug();
   expect(await axios.get("/api/expenses/fakeId")).toEqual({
     data: expensesListStub,

@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { store } from "../app/store";
 import { AddCategoryForm } from "./AddCategoryForm";
 
-test("renders AddCategoryForm with form controls", () => {
+test("should render AddCategoryForm with form controls", () => {
 
   render(
     <Provider store={store}>

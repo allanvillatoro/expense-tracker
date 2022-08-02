@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { CategoryRow } from './CategoryRow';
 import { categoryStub } from './categoryStub';
 
-test("renders CategoryRow component with 3 cells", () => {
+test("should render CategoryRow component with 3 cells", () => {
   render(
     <table>
       <tbody>
