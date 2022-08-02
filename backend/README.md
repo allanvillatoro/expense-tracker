@@ -7,6 +7,11 @@ This is a RESTful API developed using NestJS that saves and retrieves data for a
 ## Installation
 
 ```bash
+
+# nestjs install
+$ npm i -g @nestjs/cli
+
+# install dependencies
 $ npm install
 ```
 
