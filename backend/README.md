@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a RESTful API developed using NestJS, which saves and retrieves data to a web app that tracks your expenses. It also uses MongoDB as database server.
+This is a RESTful API developed using NestJS that saves and retrieves data for a web app that tracks your expenses. It also uses MongoDB as database server.
 
 ## Installation
 
@@ -42,4 +42,4 @@ In order to successfully start the service, you also need to set the following e
 
 ## Documentation
 
-To see how to interact with the endpoints, please reffer to the Swagger documentation that can be found at /api.
+To see how to interact with the endpoints, please reffer to the Swagger documentation that can be found at ```/api```.

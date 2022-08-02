@@ -1,20 +1,21 @@
-# Backend and Frontend Challenge 2022 - Expense Tracker
+# Full Stack Challenge 2022 - Expense Tracker
 
 ## Description
 
-This web app tracks and categorizes your expenses and set alarms to your budget categories.
+This web app tracks and categorizes your expenses, and sets alarms to your budget categories.
 
 ## Try it Live!
 
 Base URL: https://URL.herokuapp.com/
+
 Documentation URL: https://URL.herokuapp.com/api
 
 It might take a while for the service to answer on the first time.
 
 ## Technologies Used
 
-- [React]()
-- [Redux Toolkit]()
+- [React](https://reactjs.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
 - [NestJS](https://nestjs.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [Docker](https://www.docker.com/)
@@ -26,28 +27,6 @@ It might take a while for the service to answer on the first time.
 
 Please check out the README files in frontend and backend folders.
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# test coverage
-$ npm run test:cov
-```
 ## File structure
     .
     ├── backend                     # folder for the NestJS API
