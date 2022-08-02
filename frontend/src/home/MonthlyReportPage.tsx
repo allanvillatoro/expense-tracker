@@ -122,7 +122,7 @@ export const MonthlyReportPage = () => {
 
     let tempLabels = categories.map((category) => category.name);
     let tempBudgetsForCategories = categories.map(
-      (category: Category, index) => category.budget
+      (category: Category) => category.budget
     );
     setLabels(tempLabels);
     setBudgetsForCategories(tempBudgetsForCategories);
@@ -245,9 +245,11 @@ export const MonthlyReportPage = () => {
 
   return (
     <div className="pageContainer">
-      <br />
+      <br/>
       {isLoggedIn && (
-        <h3 className="text-center" style={{paddingBottom: 20}}>Welcome, {loggedUser?.fullName} </h3>
+          <h3 className="text-center" style={{ paddingBottom: 20 }}>
+            ¡Welcome, {loggedUser?.fullName}!
+          </h3>
       )}
       <div className="col-12 col-lg-8 offset-lg-2 chartContainer">
         <div style={{ alignSelf: "end" }}>

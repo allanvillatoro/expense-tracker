@@ -11,9 +11,14 @@ import { UsersService } from './users/users.service';
 import { User, UserSchema } from './schemas/user.schema';
 import { ConfigModule } from '@nestjs/config';
 import { EnvConfiguration } from './config/env.config';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname,'..','public'), 
+    }),
     ConfigModule.forRoot({
       load: [EnvConfiguration]
     }),

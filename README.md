@@ -6,9 +6,9 @@ This web app tracks and categorizes your expenses, and sets alarms to your budge
 
 ## Try it Live!
 
-Base URL: https://URL.herokuapp.com/
+Base URL: https://av-expense-tracker.herokuapp.com/
 
-Documentation URL: https://URL.herokuapp.com/api
+Documentation URL: https://av-expense-tracker.herokuapp.com/api
 
 It might take a while for the service to answer on the first time.
 

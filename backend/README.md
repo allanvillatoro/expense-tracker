@@ -18,9 +18,6 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
-
 # development: watch mode
 $ npm run start:dev
 
