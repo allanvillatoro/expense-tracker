@@ -19,6 +19,9 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
+# build for production mode
+$ npm build
+
 # production mode
 $ npm run start:prod
 ```
