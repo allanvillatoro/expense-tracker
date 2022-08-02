@@ -2,7 +2,7 @@
 
 ## Description
 
-This web app tracks and categorizes your expenses, and sets alarms to your budget categories.
+This web app tracks and categorizes your expenses, and sets alarms to your budget categories. It doesn't use any authorization method for endpoints. However, you can create users and login without tokens.
 
 ## Try it Live!
 
