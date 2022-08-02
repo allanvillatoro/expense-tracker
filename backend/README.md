@@ -48,6 +48,8 @@ In order to successfully start the service, you also need to set the following e
 - MONGODB -> The connection string (URI) to the Mongo Database
 - PORT -> The port which the server will listen to
 
+The live project is using the MongoAtlas service for the database.
+
 ## Documentation
 
 To see how to interact with the endpoints, please reffer to the Swagger documentation that can be found at ```/api```.
