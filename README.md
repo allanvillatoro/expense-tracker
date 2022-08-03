@@ -37,6 +37,9 @@ Please check out the README files in frontend and backend folders.
     |    |      ├──────users        # controller, service and dtos for users
     |    |      └──────app.module   # main module for controllers and services
     |    ├──────test                # stubs for the unit tests
+    |    ├──────.env.template       # example for env variables in .env file
+    |    ├──────docker-compose.prod # configuration for deployment with docker
+    |    ├──────Dockerfile          # configuration for the docker creation
     |    ├──────package.json        # configuration and dependencies for NestJS
     |    └──────README.md           # instructions for the backend
     ├── frontend                    # folder for the React web app
@@ -51,3 +54,32 @@ Please check out the README files in frontend and backend folders.
     |    ├──────package.json        # configuration and dependencies for React
     |    └── README.md              # instructions for the frontend
     └── README.md                   # general instructions for the project
+
+## Docker Instructions
+
+Go to the frontend folder and execute the following commands to build the app:
+
+```bash
+# install dependencies
+$ npm install
+
+# build for production
+$ npm run build
+```
+
+Copy all the files inside frontend/build folder to backend/public.
+
+You need to pass the following environment variables to a new .env file (check out .env.template):
+
+- MONGODB -> The connection string (URI) to the Mongo Database
+- PORT -> The port you want the server listen to
+
+```bash
+# generate the container
+$ docker-compose -f docker-compose.prod.yaml up --build
+
+# run the container if it's already created
+$ docker-compose -f docker-compose.prod.yaml up -d
+```
+
+The container will start with the service running and listening to the port, if successfully started.
