@@ -69,6 +69,8 @@ $ npm run build
 
 Copy all the files inside frontend/build folder to backend/public.
 
+Go to the backend folder.
+
 You need to pass the following environment variables to a new .env file (check out .env.template):
 
 - MONGODB -> The connection string (URI) to the Mongo Database
