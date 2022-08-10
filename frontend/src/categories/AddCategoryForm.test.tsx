@@ -7,7 +7,7 @@ import { categoriesApi } from '../api/categoriesApi';
 import { categoryStub } from "./categoryStub";
 
 
-describe("AddCategoryForm", () => {
+describe("AddCategoryForm tests", () => {
 
   beforeEach(() => {
     render(

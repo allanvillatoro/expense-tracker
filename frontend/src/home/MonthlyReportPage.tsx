@@ -199,9 +199,9 @@ export const MonthlyReportPage = () => {
         }
         sumByCategory.push(totalExpensesForCurrentCategory);
       });
-      setLabels([...categoriesByMonth]);
-      setTotalExpensesForCategories([...sumByCategory]);
-      setBudgetsForCategories([...budgetByCategory]);
+      setLabels(categoriesByMonth);
+      setTotalExpensesForCategories(sumByCategory);
+      setBudgetsForCategories(budgetByCategory);
       setAlarms(alerts);
     }
   };

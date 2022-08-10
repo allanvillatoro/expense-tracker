@@ -7,7 +7,7 @@ import { store } from "../app/store";
 import { expenseStub } from './expenseStub';
 import { expensesApi } from "../api/expensesApi";
 
-describe("AddExpenseForm", () => {
+describe("AddExpenseForm tests", () => {
   beforeEach(() => {
     render(
       <Provider store={store}>
