@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 import { Expense } from "../interfaces/Expense";
 import { expensesApi } from "../api/expensesApi";
 import { ExpensePost } from "../interfaces/ExpensePost";
@@ -22,9 +21,6 @@ export const expensesSlice = createSlice({
   name: "expenses",
   initialState,
   reducers: {
-    addExpense: (state, action: PayloadAction<Expense>) => {
-      state.expenses = [action.payload, ...state.expenses];
-    },
     clearExpenses: (state) => {
       state.expenses = [];
       state.status = "idle";
@@ -59,7 +55,7 @@ export const expensesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addExpense, clearExpenses } = expensesSlice.actions;
+export const { clearExpenses } = expensesSlice.actions;
 
 export default expensesSlice.reducer;
 

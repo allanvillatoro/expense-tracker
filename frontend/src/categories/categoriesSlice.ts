@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 import { Category } from "../interfaces/Category";
 import { categoriesApi } from "../api/categoriesApi";
 import { CategoryPost } from "../interfaces/CategoryPost";
@@ -22,9 +21,6 @@ export const categoriesSlice = createSlice({
   name: "categories",
   initialState,
   reducers: {
-    addCategory: (state, action: PayloadAction<Category>) => {
-      state.categories = [action.payload, ...state.categories];
-    },
     clearCategories: (state) => {
       state.categories = [];
       state.status = "idle"
@@ -59,7 +55,7 @@ export const categoriesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addCategory, clearCategories } = categoriesSlice.actions;
+export const { clearCategories } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;
 

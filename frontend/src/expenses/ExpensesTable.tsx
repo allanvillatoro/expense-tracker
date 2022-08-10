@@ -1,4 +1,3 @@
-import React from "react";
 import { Expense } from "../interfaces/Expense";
 import { ExpenseRow } from "./ExpenseRow";
 
