@@ -3,7 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "jest": {
-    "coveragePathIgnorePatterns": ["src/interfaces"]
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ],
+    "coveragePathIgnorePatterns": [
+      "src/interfaces",
+      "src/index.tsx",
+      "react-app-env.d.ts",
+      "reportWebVitals.ts"
+    ]
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
