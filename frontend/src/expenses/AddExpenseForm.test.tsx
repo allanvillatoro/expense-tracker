@@ -59,6 +59,7 @@ describe("AddExpenseForm", () => {
 
     //types 'coffee' on the description input
     await act( async () => {
+      userEvent.clear(descriptionInput)
       userEvent.type(descriptionInput, "coffee");
     })
     
@@ -69,9 +70,25 @@ describe("AddExpenseForm", () => {
     const amountInput = screen.getByRole("spinbutton");
     //types 4 into the amount input
     await act( async () => {
-      userEvent.type(amountInput, "4");
+      userEvent.clear(amountInput)
+      userEvent.type(amountInput, "4.34");
     })
     //amount now displays 4
-    expect(amountInput).toHaveValue(4);
+    expect(amountInput).toHaveValue(4.34);
+
+    //gets the date input
+    const dateInput = screen.getByLabelText(
+      "Date"
+    );
+
+    //types 'August 10, 2022' on the description input
+    await act( async () => {
+      userEvent.clear(dateInput)
+      userEvent.type(dateInput, "August 10, 2022");
+    })
+    
+    //dateInput now displays August 10, 2022
+    expect(dateInput).toHaveValue("August 10, 2022");
+
   });
 });

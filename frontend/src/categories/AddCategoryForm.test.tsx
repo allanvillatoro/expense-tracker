@@ -33,6 +33,7 @@ describe("AddCategoryForm", () => {
     );
     //types 'drinks' on the description input
     await act( async () => {
+      userEvent.clear(categoryNameInput)
       userEvent.type(categoryNameInput, "drinks");
     })
     //description now displays drinks
@@ -42,6 +43,7 @@ describe("AddCategoryForm", () => {
     const budgetInput = screen.getByLabelText(/Budget/)
     //types 400 into the budget input
     await act( async () => {
+      userEvent.clear(budgetInput)
       userEvent.type(budgetInput, "400");
     })
     //budget now displays 4

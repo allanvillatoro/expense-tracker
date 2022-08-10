@@ -24,7 +24,6 @@ function App() {
 
   return (
     <div>
-      <BrowserRouter>
         <header>
           {isLoggedIn && (
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -119,7 +118,6 @@ function App() {
             />
           </Routes>
         </div>
-      </BrowserRouter>
     </div>
   );
 }

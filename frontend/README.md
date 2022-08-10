@@ -23,7 +23,7 @@ Launches the test runner in the interactive watch mode.
 
 ### `npm test -- --coverage --watchAll=false`
 
-Launches the test coverage.
+Launches the test coverage report.
 
 ### `npm run build`
 
