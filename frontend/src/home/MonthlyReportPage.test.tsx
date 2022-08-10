@@ -13,8 +13,7 @@ test("should render MonthlyReportPage", () => {
       <MonthlyReportPage />
     </Provider>
   );
-  screen.debug();
-
+  //screen.debug();
   expect(screen.getByRole("combobox")).toHaveDisplayValue("Select a month");
   expect(screen.getAllByRole("option").length).toBe(2);
 });
