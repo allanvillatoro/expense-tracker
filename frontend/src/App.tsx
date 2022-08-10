@@ -1,6 +1,6 @@
 import "./Styles.css";
 import { ExpensesPage } from "./expenses/ExpensesPage";
-import { Routes, Route, Link, BrowserRouter, Navigate } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { MonthlyReportPage } from "./home/MonthlyReportPage";
 import { CategoriesPage } from "./categories/CategoriesPage";
 import { LoginPage } from "./users/LoginPage";
