@@ -84,7 +84,7 @@ export const AddExpenseForm = ({ categoriesList }: AddExpenseFormProps) => {
       };
       dispatch(postExpense(newExpense)).then((response) => {
         if (response.type === "expenses/postExpense/fulfilled") {
-          swal("Expense saved successfully");
+          swal("Expense Saved Successfully");
           triggerAlarms(newExpense);
           resetForm();
         }

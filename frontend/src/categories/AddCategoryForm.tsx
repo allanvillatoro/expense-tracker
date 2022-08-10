@@ -1,4 +1,3 @@
-import React from "react";
 import { useFormik } from "formik";
 import { postCategory } from "./categoriesSlice";
 import swal from "sweetalert";

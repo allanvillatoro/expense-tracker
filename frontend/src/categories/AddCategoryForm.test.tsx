@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { store } from "../app/store";
 import { AddCategoryForm } from "./AddCategoryForm";
+import { categoriesApi } from '../api/categoriesApi';
+import { categoryStub } from "./categoryStub";
 
 
 describe("AddCategoryForm", () => {
@@ -25,6 +27,27 @@ describe("AddCategoryForm", () => {
     //save button
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
+
+  test("should save the category clicking on Save button", async () => {
+    //mocks the postCategory function on categoriesApi
+    const mock = jest.spyOn(categoriesApi, "postCategory").mockResolvedValue({
+      data: categoryStub,
+      status: 201,
+      statusText: "OK",
+      headers: {},
+      config: {},
+    });
+
+    //click on Save button
+    await act( async () => {
+      userEvent.click(screen.getByText("Save"));
+    })
+
+    //wait until the Saved messaged appears
+    await act( async () => {
+      expect(screen.queryByText(/saved/)).toBeTruthy();
+    })
+  })
 
   test("should update the select and input values", async () => {
     //gets the categoryName input
@@ -61,4 +84,3 @@ describe("AddCategoryForm", () => {
   })
 
 })
-

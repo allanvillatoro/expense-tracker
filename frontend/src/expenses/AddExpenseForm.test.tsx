@@ -1,9 +1,11 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { AddExpenseForm } from "./AddExpenseForm";
 import { categoriesListStub } from "../categories/categoriesListStub";
 import { Provider } from "react-redux";
 import { store } from "../app/store";
-import userEvent from "@testing-library/user-event";
+import { expenseStub } from './expenseStub';
+import { expensesApi } from "../api/expensesApi";
 
 describe("AddExpenseForm", () => {
   beforeEach(() => {
@@ -36,7 +38,7 @@ describe("AddExpenseForm", () => {
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
-  test("should update the select and input values", async () => {
+  test("should change the select and input values", async () => {
     //gets the select
     const select = screen.getByRole("combobox");
     const option = screen.getByRole("option", { name: "drinks" });
@@ -89,6 +91,29 @@ describe("AddExpenseForm", () => {
     
     //dateInput now displays August 10, 2022
     expect(dateInput).toHaveValue("August 10, 2022");
-
   });
+
+  test("should save the expense clicking on Save button", async () => {
+    //mocks the postExpense function on expensesApi
+    const mock = jest.spyOn(expensesApi, "postExpense").mockResolvedValue({
+      data: expenseStub,
+      status: 201,
+      statusText: "OK",
+      headers: {},
+      config: {},
+    });
+
+    //gets the Save button
+    const saveButton = screen.getByText("Save");
+    //click on Save button
+    await act( async () => {
+      userEvent.click(saveButton);
+    })
+
+    //wait until the Saved messaged appears
+    await act( async () => {
+      expect(screen.queryByText(/Saved/)).toBeTruthy();
+    })
+  })
+
 });
