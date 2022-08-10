@@ -130,6 +130,7 @@ export const AddExpenseForm = ({ categoriesList }: AddExpenseFormProps) => {
           className="form-control"
           id="amount"
           min="0"
+          step=".01"
           onChange={formik.handleChange}
           value={formik.values.amount}
         />

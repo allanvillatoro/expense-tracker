@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsDate, IsInt, IsMongoId, IsPositive, IsString, MaxDate, MinLength } from 'class-validator';
+import { IsDate, IsInt, IsMongoId, IsNumber, IsPositive, IsString, MaxDate, MinLength } from 'class-validator';
 
 export class ExpenseDTO {
 
@@ -23,11 +23,11 @@ export class ExpenseDTO {
   readonly categoryName: string;
 
   @ApiProperty({
-    example: 3,
+    example: 3.45,
     description: 'Amount ($)',
     minimum: 0
   })
-  @IsInt()
+  @IsNumber()
   @IsPositive()
   readonly amount: number;
 

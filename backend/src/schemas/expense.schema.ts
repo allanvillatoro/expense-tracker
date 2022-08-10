@@ -31,7 +31,7 @@ export class Expense {
   categoryName: string;
 
   @ApiProperty({
-    example: 5,
+    example: 5.25,
     description: 'Amount ($)'
   })
   @Prop({ required: true })
