@@ -59,7 +59,7 @@ describe("RegisterPage tests", () => {
 
     //gets the confirm password input
     const confirmPasswordInput = screen.getByLabelText("Confirm Password");
-    //clears and types React2022 into the confirm password input
+    //clears and types React2022 on the confirm password input
     await act(async () => {
       userEvent.clear(confirmPasswordInput);
       userEvent.type(confirmPasswordInput, "React2022");

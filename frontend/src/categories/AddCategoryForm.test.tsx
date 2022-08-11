@@ -54,12 +54,12 @@ describe("AddCategoryForm tests", () => {
     const categoryNameInput = screen.getByPlaceholderText(
       "Type a category with at least 1 character"
     );
-    //types 'drinks' on the description input
+    //types 'drinks' on the categoryName input
     await act( async () => {
       userEvent.clear(categoryNameInput)
       userEvent.type(categoryNameInput, "drinks");
     })
-    //description now displays drinks
+    //categoryName now displays drinks
     expect(categoryNameInput).toHaveValue("drinks");
 
     //gets the budget input
@@ -69,17 +69,17 @@ describe("AddCategoryForm tests", () => {
       userEvent.clear(budgetInput)
       userEvent.type(budgetInput, "400");
     })
-    //budget now displays 4
+    //budget now displays 400
     expect(budgetInput).toHaveValue(400);
 
     //gets the alarm input
     const alarmInput = screen.getByLabelText(/Alarm/)
-    //clears and types 400 into the budget input
+    //clears and types 65 into the alarm input
     await act( async () => {
       userEvent.clear(alarmInput)
       userEvent.type(alarmInput, "65");
     })
-    //budget now displays 4
+    //alarm now displays 65
     expect(alarmInput).toHaveValue(65);
   })
 

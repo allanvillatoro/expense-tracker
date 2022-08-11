@@ -72,11 +72,11 @@ describe("expenses redux state tests", () => {
   test("should be able to clear the expenses array", () => {
     //gets the current state
     const state = store.getState().expenses;
-    //current state should be logged in
+    //current state.expenses should not be empty
     expect(state.expenses.length).toBeGreaterThan(0);
     //get the actual state
     const actual = expensesReducer(state,clearExpenses());
-    //actual should not be logged in
+    //actual state should be empty
     expect(actual.expenses.length).toBe(0);
   });
 });

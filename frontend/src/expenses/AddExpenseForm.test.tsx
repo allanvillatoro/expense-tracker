@@ -70,12 +70,12 @@ describe("AddExpenseForm tests", () => {
 
     //gets the amount input
     const amountInput = screen.getByRole("spinbutton");
-    //types 4 into the amount input
+    //types 4.34 on the amount input
     await act( async () => {
       userEvent.clear(amountInput)
       userEvent.type(amountInput, "4.34");
     })
-    //amount now displays 4
+    //amount now displays 4.34
     expect(amountInput).toHaveValue(4.34);
 
     //gets the date input

@@ -64,7 +64,7 @@ describe("MonthlyReportPage tests", () => {
     const select = screen.getByRole("combobox");
     const option = screen.getByRole("option", { name: "2022 - Jul" });
 
-    //selects the drinks option
+    //selects the 2022 - Jul option
     await waitFor(() => {
       userEvent.selectOptions(select, option);
     })

@@ -40,7 +40,7 @@ describe("LoginPage tests", () => {
 
     //gets the password input
     const passwordInput = screen.getByLabelText("Password");
-    //clears and types React2022 into the password input
+    //clears and types React2022 on the password input
     await act(async () => {
       userEvent.clear(passwordInput);
       userEvent.type(passwordInput, "React2022");

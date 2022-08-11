@@ -72,11 +72,11 @@ describe("categories redux state tests", () => {
   test("should be able to clear the categories array", () => {
     //gets the current state
     const state = store.getState().categories;
-    //current state should be logged in
+    //current state.categories should not be empty
     expect(state.categories.length).toBeGreaterThan(0);
     //get the actual state
     const actual = categoriesReducer(state,clearCategories());
-    //actual should not be logged in
+    //actual state.categories should be empty
     expect(actual.categories.length).toBe(0);
   });
 });
